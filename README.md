@@ -2,4 +2,4 @@
 A maze generator built in Python with graphs and the Willson Algorithm 
 
 
-Fait pas de la merde stp 
+Envoie un msg si tu capte pas comment ça marche
