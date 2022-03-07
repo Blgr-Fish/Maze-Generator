@@ -6,6 +6,7 @@ Created on Mon Mar  7 12:50:10 2022
 @author: Maël Pierre Ziad
 """
 
-G = {}
+class Graphe:
 
-print('V0.11')
+def __init__(self) -> None:
+    pass
