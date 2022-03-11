@@ -34,8 +34,8 @@ class Graphe_dictionnaire:
         if x != y:                    # pour pas qu'on puisse faire une arrete avec le meme noeud
             self.A[x].append(y)
            
-            if x not in self.A[y]:    # pour les graphes non orientés 
-                self.A[y].append(x)
+            #if x not in self.A[y]:    # pour les graphes non orientés 
+                #self.A[y].append(x)   # jsp si il l'est donc j'ai désactivé
 
     """
     def creer_graphe4x4(self):        # créer un labyrinthe un graphe en 4x4 avec 16 noeuds isolés
@@ -87,32 +87,33 @@ class Graphe_dictionnaire:
 
             cote_choisi = random.randint(1,4)
              
+            print(random_cell)
 
             if cote_choisi == 1 and random_cell[0] != 0: # si ça va vers le haut et que c'est à 0 on peut pas monter plus haut
-                if liste_valeurs[random_cell[0]-self.n] != liste_valeurs[random_index]:
-                    liste_valeurs[random_index] = liste_valeurs[random_cell[0]-self.n] 
-                    self.ajouter_arete(random_cell,(random_cell[0]+1,random_cell[1]))
+                if liste_valeurs[random_cell[0]-1] != liste_valeurs[random_index]:
+                    liste_valeurs[random_index] = liste_valeurs[random_cell[0]-1] 
+                    self.ajouter_arete(random_cell,(random_cell[0]-1,random_cell[1]))
                     nombre_coups +=1
 
             if cote_choisi == 2 and random_cell[0] != (self.n)-1 : # on peut pas descendre plus bas que 3
-                if liste_valeurs[random_cell[0]] != liste_valeurs[random_index]:
-                    liste_valeurs[random_index] = liste_valeurs[random_cell[0]+self.n]
-                    self.ajouter_arete(random_cell,(random_cell[0]-1,random_cell[1])) 
+                if liste_valeurs[random_cell[0]+1] != liste_valeurs[random_index]:
+                    liste_valeurs[random_index] = liste_valeurs[random_cell[0]+1]
+                    self.ajouter_arete(random_cell,(random_cell[0]+1,random_cell[1])) 
                     nombre_coups +=1
 
             if cote_choisi == 3 and random_cell[1] != 0 : 
-                if liste_valeurs[random_cell[0]-1] != liste_valeurs[random_index] :
-                    liste_valeurs[random_index] = liste_valeurs[random_cell[0]-1]
+                if liste_valeurs[random_cell[1]-1] != liste_valeurs[random_index] :
+                    liste_valeurs[random_index] = liste_valeurs[random_cell[1]-1]
                     self.ajouter_arete(random_cell,(random_cell[0],random_cell[1]-1))
                     nombre_coups +=1
 
             if cote_choisi == 4 and random_cell[1] != (self.n)-1 : 
-                if liste_valeurs[random_cell[0]+1] != liste_valeurs[random_index] :
-                    liste_valeurs[random_index] = liste_valeurs[random_cell[0]+1]
+                if liste_valeurs[random_cell[1]+1] != liste_valeurs[random_index] :
+                    liste_valeurs[random_index] = liste_valeurs[random_cell[1]+1]
                     self.ajouter_arete(random_cell,(random_cell[0],random_cell[1]+1))
                     nombre_coups +=1
             
-
+            print(liste_valeurs)
             if liste_valeurs.count(liste_valeurs[0]) == len(liste_valeurs):
                 maze_completed = True
 
@@ -150,9 +151,9 @@ print(G.voisins('D'))"""
 G.creer_graphe_nxn(4)
 
 
-print(G.__repr__())
-print(G.fusion_aleatoire())
 
+print(G.fusion_aleatoire())
+print(G.__repr__())
 
 
 #     0  1  2  3
