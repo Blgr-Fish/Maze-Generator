@@ -7,6 +7,7 @@ Created on Mon Mar  7 12:50:10 2022
 """
 
 import random
+from random import *
 
 class Graphe_dictionnaire:
 
@@ -36,14 +37,19 @@ class Graphe_dictionnaire:
             if x not in self.A[y]:    # pour les graphes non orientés 
                 self.A[y].append(x)
 
-
+    """
     def creer_graphe4x4(self):        # créer un labyrinthe un graphe en 4x4 avec 16 noeuds isolés
         for i in range(4):            # servira pour l'initialisation du labyrinthe
             for j in range(4):
-                self.ajouter_sommet(str(i)+str(j))
+                self.ajouter_sommet((i,j))"""
+    
+    def creer_graphe_nxn(self,n):
+        for i in range(n):
+            for j in range(n):
+                self.ajouter_sommet((i,j))
 
 
-    def wilson(self):
+    def wilson(self):                  # algo wilson
         maze_completed = False
         self.first_cell = random.choice(list(self.A)) # créer la cellule initiale de manière aléatoire
         sommets_verifies = [self.first_cell]
@@ -51,10 +57,28 @@ class Graphe_dictionnaire:
         while not maze_completed:
             self.random_cell = random.choice(list(self.A))
             if self.random_cell not in  sommets_verifies:     # si la cellule choisie au hasard n'est pas dans les sommets verifies
+                
+                
+                
+                
                 sommets_verifies.append(self.random_cell)     # on ajoute la random_cell dans les sommets visites
                 
                 # il faut faire en sorte de rejoindre random_cell et first_cell maintenant
+    
+    def fusion_aleatoire(self):
+        liste_valeurs = []
+        longueur = len(self.A)
+        while len(liste_valeurs) < longueur :
+            valeur_temp = randint(0,longueur)
+            if valeur_temp not in liste_valeurs : 
+                liste_valeurs.append(valeur_temp)
+        return liste_valeurs
+            
+            
         
+        
+        
+
         
 
 
@@ -78,7 +102,16 @@ G.ajouter_arete('A','A') # ne marche pas car même valeur
 print(G.voisins('A'))
 print(G.voisins('D'))"""
 
-G.creer_graphe4x4()
+G.creer_graphe_nxn(4)
 
-print(G.wilson())
+
 print(G.__repr__())
+print(G.fusion_aleatoire())
+
+
+
+#     0  1  2  3
+#  0  00 01 02 03
+#  1  10 11 12 13
+#  2  20 21 22 23
+#  3  30 31 32 33
