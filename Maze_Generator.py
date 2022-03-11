@@ -7,7 +7,7 @@ Created on Mon Mar  7 12:50:10 2022
 """
 
 import random
-from random import *
+
 
 class Graphe_dictionnaire:
 
@@ -66,12 +66,25 @@ class Graphe_dictionnaire:
                 # il faut faire en sorte de rejoindre random_cell et first_cell maintenant
     
     def fusion_aleatoire(self):
+        maze_completed = False
         liste_valeurs = []
         longueur = len(self.A)
+
         while len(liste_valeurs) < longueur :
-            valeur_temp = randint(0,longueur)
+            valeur_temp = random.randint(0,longueur)
+
             if valeur_temp not in liste_valeurs : 
                 liste_valeurs.append(valeur_temp)
+
+        while not maze_completed :
+            random_cell = random.choice(list(self.A)) # un noeud random du graphe...
+            random_index = list(self.A).index(random_cell) #... et son index
+
+            #print(random_cell)
+            #print(random_index)
+            maze_completed = True
+
+
         return liste_valeurs
             
             
