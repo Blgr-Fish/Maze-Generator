@@ -135,18 +135,7 @@ class Graphe_dictionnaire:
 
 G = Graphe_dictionnaire()
 
-"""G.ajouter_sommet('A')
-G.ajouter_sommet('B')
-G.ajouter_sommet('C')
-G.ajouter_sommet('D')
 
-G.ajouter_arete('A','B')
-G.ajouter_arete('A','C')
-G.ajouter_arete('A','D')
-G.ajouter_arete('A','A') # ne marche pas car même valeur
-
-print(G.voisins('A'))
-print(G.voisins('D'))"""
 
 G.creer_graphe_nxn(4)
 
