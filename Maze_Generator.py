@@ -44,8 +44,9 @@ class Graphe_dictionnaire:
                 self.ajouter_sommet((i,j))"""
     
     def creer_graphe_nxn(self,n):
-        for i in range(n):
-            for j in range(n):
+        self.n = n
+        for i in range(self.n):
+            for j in range(self.n):
                 self.ajouter_sommet((i,j))
 
 
@@ -67,24 +68,46 @@ class Graphe_dictionnaire:
     
     def fusion_aleatoire(self):
         maze_completed = False
-        liste_valeurs = []
-        longueur = len(self.A)
+        liste_valeurs = [] # Liste des valeurs attribuées à chaque noeud du graphe
+        longueur = len(self.A) # Longueur du Graphe
 
         while len(liste_valeurs) < longueur :
-            valeur_temp = random.randint(0,longueur)
+            valeur_temp = random.randint(0,longueur) # On rempli la liste de valeur au hasard...
 
             if valeur_temp not in liste_valeurs : 
-                liste_valeurs.append(valeur_temp)
+                liste_valeurs.append(valeur_temp)  #... que si elles ne sont pas déjà présentes
 
         while not maze_completed :
             random_cell = random.choice(list(self.A)) # un noeud random du graphe...
             random_index = list(self.A).index(random_cell) #... et son index
-
+            cote_choisi = None
             #print(random_cell)
             #print(random_index)
-            maze_completed = True
 
+            cote_choisi = random.randint(1,4)
+             
 
+            if cote_choisi == 1 and random_cell[0] != 0: # si ça va vers le haut et que c'est à 0 on peut pas monter plus haut
+                if liste_valeurs[random_cell[0]-self.n] != liste_valeurs[random_index]:
+                    liste_valeurs[random_cell[0]-self.n] = liste_valeurs[random_index]
+            
+            if cote_choisi == 2 and random_cell[0] != (self.n)-1 : # on peut pas descendre plus bas que 3
+                if liste_valeurs[random_cell[0]+self.n] != liste_valeurs[random_index]:
+                    liste_valeurs[random_cell[0]+self.n] = liste_valeurs[random_index]
+
+            if cote_choisi == 3 and random_cell[1] != 0 : 
+                if liste_valeurs[random_cell[0]-1] != liste_valeurs[random_index] :
+                    liste_valeurs[random_cell[0]-1] = liste_valeurs[random_index]
+
+            if cote_choisi == 4 and random_cell[1] != (self.n)-1 : 
+                if liste_valeurs[random_cell[0]+1] != liste_valeurs[random_index] :
+                    liste_valeurs[random_cell[0]+1] = liste_valeurs[random_index]
+            
+            print(liste_valeurs)
+            if liste_valeurs.count(liste_valeurs[0]) == len(liste_valeurs):
+                maze_completed = True
+
+            
         return liste_valeurs
             
             
@@ -115,7 +138,7 @@ G.ajouter_arete('A','A') # ne marche pas car même valeur
 print(G.voisins('A'))
 print(G.voisins('D'))"""
 
-G.creer_graphe_nxn(4)
+G.creer_graphe_nxn(3)
 
 
 print(G.__repr__())
