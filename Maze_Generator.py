@@ -44,6 +44,8 @@ class Graphe_dictionnaire:
                 self.ajouter_sommet((i,j))"""
     
     def creer_graphe_nxn(self,n):    # créer un graphe de n x n taille 
+        #assert type(n) is int
+        #assert n >= 1
         self.n = n
         for i in range(self.n):
             for j in range(self.n):
@@ -124,7 +126,7 @@ class Graphe_dictionnaire:
 
 G = Graphe_dictionnaire()
 
-G.creer_graphe_nxn(10)
+G.creer_graphe_nxn(4)
 
 
 
