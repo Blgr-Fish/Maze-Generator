@@ -31,11 +31,15 @@ class Graphe_dictionnaire:
         if y not in self.A.keys():
             self.ajouter_sommet(y)    # on vérifie que le noeud existe ou pas dans le graphe
             
-        if x != y:                    # pour pas qu'on puisse faire une arrete avec le meme noeud
-            self.A[x].append(y)
+        if x  not in y and y not in x :
+            print("ok")
+        
+        
+            if x != y:                    # pour pas qu'on puisse faire une arrete avec le meme noeud
+                self.A[x].append(y)
            
-            #if x not in self.A[y]:    # pour les graphes non orientés 
-                #self.A[y].append(x)   
+                if x not in self.A[y]:    # pour les graphes non orientés 
+                    self.A[y].append(x)   
 
     """
     def creer_graphe4x4(self):        # créer un labyrinthe un graphe en 4x4 avec 16 noeuds isolés
