@@ -16,6 +16,7 @@ def turtle_truc(n,G):
         while etape == 0 : # on  définit les contours du labyrinthe
             forward(20*n)
             right(90)
+  
         
         
             if abs(pos()) < 1 :
@@ -30,13 +31,21 @@ def turtle_truc(n,G):
 
                        if key_list[i] in val_list[j]:
                            print(key_list[i] ,"est relié à ",key_list[j])
+                         
                            
                        else :
-                           if key_list[i] != key_list[j] and abs(i-j) == 1 :
-                               print(key_list[i] ,"est  pas relié à ",key_list[j])
-                               
-                               setpos((i*20),(j*20))
-                        
+                           if key_list[i] != key_list[j]:
+                               if key_list[i][0] == key_list[j][0] :
+                                   print(key_list[i] ,"est  pas relié à ",key_list[j])
+                                   print('ok')
+                                   
+                                   
+                                   setpos((10*n)),(0)
+                                   setpos((10*n),(j*20))
+                               elif key_list[i][1] == key_list[j][1]:
+                                   print(key_list[i] ,"est  pas relié à ",key_list[j])
+
+                                   print('o')
                            
             
                        
