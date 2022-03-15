@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#from Maze_generator_fusion_aleatoireV1 import *
+from Maze_Generator import *
 from math import *
 
 
