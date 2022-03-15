@@ -32,7 +32,6 @@ class Graphe_dictionnaire:
             self.ajouter_sommet(y)    # on vérifie que le noeud existe ou pas dans le graphe
             
         if x  not in y and y not in x :
-            print("ok")
         
         
             if x != y:                    # pour pas qu'on puisse faire une arrete avec le meme noeud
@@ -134,9 +133,9 @@ G.creer_graphe_nxn(2)
 
 
 
-print(G.fusion_aleatoire())
-print()
-print(G.__repr__())
+#print(G.fusion_aleatoire())
+#print()
+#print(G.__repr__())
 
 
 #     0  1  2  3
