@@ -132,6 +132,7 @@ G.creer_graphe_nxn(4)
 
 
 print(G.fusion_aleatoire())
+
 #print()
 print(G.__repr__())
 
