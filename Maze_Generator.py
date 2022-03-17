@@ -18,6 +18,8 @@ class Graphe_dictionnaire:
     def __repr__(self):               # méthode repr pour afficher le graphe
         return str(self.A)
 
+    def longueur(self):
+        return len(self.A)
 
     def voisins(self, x):             # montre les voisins d'un noeud
         return self.A[x]
@@ -32,17 +34,14 @@ class Graphe_dictionnaire:
             self.ajouter_sommet(y)    # on vérifie que le noeud existe ou pas dans le graphe
             
 
-        if x != y:                    # pour pas qu'on puisse faire une arrete avec le meme noeud
-            self.A[x].append(y)
+        if x != y:  
+            if y not in self.A[x]:                  # pour pas qu'on puisse faire une arrete avec le meme noeud
+                self.A[x].append(y)
            
                 #if x not in self.A[y]:    # pour les graphes non orientés 
-                #    self.A[y].append(x)   
+                #   self.A[y].append(x)   
 
-    """
-    def creer_graphe4x4(self):        # créer un labyrinthe un graphe en 4x4 avec 16 noeuds isolés
-        for i in range(4):            # servira pour l'initialisation du labyrinthe
-            for j in range(4):
-                self.ajouter_sommet((i,j))"""
+    
     
     def creer_graphe_nxn(self,n):    # créer un graphe de n x n taille 
         #assert type(n) is int
@@ -114,7 +113,7 @@ class Graphe_dictionnaire:
                     self.ajouter_arete(random_cell,(random_cell[0],random_cell[1]+1))
                     nombre_coups +=1
             
-            #print(liste_valeurs)
+            print(liste_valeurs)
             if liste_valeurs.count(liste_valeurs[0]) == len(liste_valeurs): # on vérifie que le nombre de valeurs égales à liste_valeurs[0] soit égal à la longueur de la liste
                 maze_completed = True # si c'est le cas, ça veut dire que toutes les valeurs sont les mêmes et donc que le graphe est complet
 
@@ -127,7 +126,7 @@ class Graphe_dictionnaire:
 
 G = Graphe_dictionnaire()
 
-G.creer_graphe_nxn(4)
+G.creer_graphe_nxn(5)
 
 
 
