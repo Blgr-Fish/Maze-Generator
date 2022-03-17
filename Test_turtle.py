@@ -88,8 +88,8 @@ E = {(0, 0): [(0, 1)], (0, 1): [(0, 2), (0, 0), (1, 1)], (0, 2): [(1, 2), (0, 1)
 
 print(turtle_truc(sqrt(len(G)),G))
 
-A = Graphe_dictionnaire()
-A.creer_graphe_nxn(2)
+#A = Graphe_dictionnaire()
+#A.creer_graphe_nxn(2)
 
 
     
