@@ -127,7 +127,7 @@ class Graphe_dictionnaire:
 
 G = Graphe_dictionnaire()
 
-G.creer_graphe_nxn(4)
+G.creer_graphe_nxn(2)
 
 
 
