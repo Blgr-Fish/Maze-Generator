@@ -33,10 +33,11 @@ class Graphe_dictionnaire:
             
 
         if x != y:                    # pour pas qu'on puisse faire une arrete avec le meme noeud
-            self.A[x].append(y)
+            if y not in self.A[x]:
+                self.A[x].append(y)
            
-            if x not in self.A[y]:    # pour les graphes non orientés 
-                self.A[y].append(x)   
+            #if x not in self.A[y]:    # pour les graphes non orientés 
+            #    self.A[y].append(x)   
 
     """
     def creer_graphe4x4(self):        # créer un labyrinthe un graphe en 4x4 avec 16 noeuds isolés
@@ -93,7 +94,7 @@ class Graphe_dictionnaire:
             if cote_choisi == 1 and random_cell[0] != 0: # si ça va vers le haut et que c'est à l'index est à 0 on peut pas monter plus haut
                 if liste_valeurs[random_cell[0]-1] != liste_valeurs[random_index]: # on vérifie que la valeur attribuée au noeud du dessus est différent de celle du noeud choisi
                     liste_valeurs[random_index] = liste_valeurs[random_cell[0]-1]  # si c'est le cas, le noeud choisi prend la valeur du noeud du dessus
-                    self.ajouter_arete(random_cell,(random_cell[0]-1,random_cell[1])) # et on les joints pas une arrête
+                    self.ajouter_arete(random_cell,(random_cell[0]-1,random_cell[1])) # et on les joints par une arrête
                     nombre_coups +=1
 
             if cote_choisi == 2 and random_cell[0] != (self.n)-1 : # on peut pas descendre plus bas que 3
@@ -114,7 +115,7 @@ class Graphe_dictionnaire:
                     self.ajouter_arete(random_cell,(random_cell[0],random_cell[1]+1))
                     nombre_coups +=1
             
-            #print(liste_valeurs)
+            print(liste_valeurs)
             if liste_valeurs.count(liste_valeurs[0]) == len(liste_valeurs): # on vérifie que le nombre de valeurs égales à liste_valeurs[0] soit égal à la longueur de la liste
                 maze_completed = True # si c'est le cas, ça veut dire que toutes les valeurs sont les mêmes et donc que le graphe est complet
 
