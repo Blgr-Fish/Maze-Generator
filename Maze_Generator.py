@@ -128,7 +128,7 @@ class Graphe_dictionnaire:
 
 G = Graphe_dictionnaire()
 
-G.creer_graphe_nxn(10)
+G.creer_graphe_nxn(4)
 
 
 
@@ -138,8 +138,12 @@ print(G.fusion_aleatoire())
 print(G.__repr__())
 
 
+
+
+
 #     0  1  2  3
-#  0  00 01 02 03
-#  1  10 11 12 13
-#  2  20 21 22 23
+
 #  3  30 31 32 33
+#  2  20 21 22 23
+#  1  10 11 12 13
+#  0  00 01 02 03
