@@ -39,11 +39,6 @@ class Graphe_dictionnaire:
             #if x not in self.A[y]:    # pour les graphes non orientés 
             #    self.A[y].append(x)   
 
-    """
-    def creer_graphe4x4(self):        # créer un labyrinthe un graphe en 4x4 avec 16 noeuds isolés
-        for i in range(4):            # servira pour l'initialisation du labyrinthe
-            for j in range(4):
-                self.ajouter_sommet((i,j))"""
     
     def creer_graphe_nxn(self,n):    # créer un graphe de n x n taille 
         #assert type(n) is int
@@ -54,7 +49,28 @@ class Graphe_dictionnaire:
                 self.ajouter_sommet((i,j))
 
 
-    def wilson(self):                  # algo wilson
+    #FONCTIONS POUR PILE#
+
+    def creer_pile (self):
+        self.pile = []
+
+    def est_vide (self) :
+        return self.pile==[]
+
+    def empiler (self, element) :
+        self.pile.append(element)
+
+    def depiler (self) :
+        if not self.est_vide():
+            del self.pile[-1]
+
+    def sommet(self):
+        if not self.est_vide():
+            return self.pile[-1]
+
+    #FIN FONCTIONS PILE#
+
+    """def wilson(self):                  # algo wilson
         maze_completed = False
         self.first_cell = random.choice(list(self.A)) # créer la cellule initiale de manière aléatoire
         sommets_verifies = [self.first_cell]
@@ -68,7 +84,7 @@ class Graphe_dictionnaire:
                 
                 sommets_verifies.append(self.random_cell)     # on ajoute la random_cell dans les sommets visites
                 
-                # il faut faire en sorte de rejoindre random_cell et first_cell maintenant
+                # il faut faire en sorte de rejoindre random_cell et first_cell maintenant"""
     
     def fusion_aleatoire(self):
         maze_completed = False # Passe à True quand le labyrinthe est complet
@@ -86,10 +102,8 @@ class Graphe_dictionnaire:
         while not maze_completed :
             random_cell = random.choice(list(self.A)) # un noeud random du graphe...
             random_index = list(self.A).index(random_cell) #... et son index
-
             cote_choisi = random.randint(1,4) # 1 = haut, 2 = bas, 3 = gauche et 4 = droite
              
-            #print(random_cell)
 
             if cote_choisi == 1 and random_cell[0] != 0: # si ça va vers le haut et que c'est à l'index est à 0 on peut pas monter plus haut
                 if liste_valeurs[random_cell[0]-1] != liste_valeurs[random_index]: # on vérifie que la valeur attribuée au noeud du dessus est différent de celle du noeud choisi
@@ -115,13 +129,19 @@ class Graphe_dictionnaire:
                     self.ajouter_arete(random_cell,(random_cell[0],random_cell[1]+1))
                     nombre_coups +=1
             
-            print(liste_valeurs)
             if liste_valeurs.count(liste_valeurs[0]) == len(liste_valeurs): # on vérifie que le nombre de valeurs égales à liste_valeurs[0] soit égal à la longueur de la liste
                 maze_completed = True # si c'est le cas, ça veut dire que toutes les valeurs sont les mêmes et donc que le graphe est complet
 
             
         return "Labirynthe effectué en : " + str(nombre_coups) + " essais."
-            
+
+    def dfs_maze(self):
+        self.creer_pile()
+        
+
+
+        pass
+
             
         
 #TESTS
