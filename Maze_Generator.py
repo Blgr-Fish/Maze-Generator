@@ -9,6 +9,27 @@ Created on Mon Mar  7 12:50:10 2022
 import random
 
 
+class Piles :
+
+    def __init__(self) -> None:
+        self.pile = []
+
+    def est_vide (self) :
+        return self.pile==[]
+
+    def empiler (self, element) :
+        self.pile.append(element)
+
+    def depiler (self) :
+        if not self.est_vide():
+            del self.pile[-1]
+
+    def sommet(self):
+        if not self.est_vide():
+            return self.pile[-1]
+
+        
+
 class Graphe_dictionnaire:
 
     def __init__(self):               # On initialise un dictionnaire vide
@@ -49,26 +70,6 @@ class Graphe_dictionnaire:
                 self.ajouter_sommet((i,j))
 
 
-    #FONCTIONS POUR PILE#
-
-    def creer_pile (self):
-        self.pile = []
-
-    def est_vide (self) :
-        return self.pile==[]
-
-    def empiler (self, element) :
-        self.pile.append(element)
-
-    def depiler (self) :
-        if not self.est_vide():
-            del self.pile[-1]
-
-    def sommet(self):
-        if not self.est_vide():
-            return self.pile[-1]
-
-    #FIN FONCTIONS PILE#
 
     """def wilson(self):                  # algo wilson
         maze_completed = False
@@ -135,12 +136,68 @@ class Graphe_dictionnaire:
             
         return "Labirynthe effectué en : " + str(nombre_coups) + " essais."
 
+   
+   
+   
+   
+   
+   
+   
     def dfs_maze(self):
-        self.creer_pile()
+        pile = Piles()
+        sommets_visites = []
+        maze_completed = False
+        nombre_coups = 0
+
+        current_cell = random.choice(list(self.A)) # un noeud random du graphe...
         
 
+        pile.empiler(current_cell)
 
-        pass
+        while not maze_completed :
+            cote_choisi = random.randint(1,4) # 1 = haut, 2 = bas, 3 = gauche et 4 = droite
+            sommets_visites.append(current_cell)
+            print(sommets_visites)
+             
+           
+            if cote_choisi == 1 and current_cell[0] != 0 and pile.sommet()[0] != 0 and pile.sommet()[0]-1 not in sommets_visites: # si ça va vers le haut et que c'est à l'index est à 0 on peut pas monter plus haut
+                    
+  
+                self.ajouter_arete(current_cell,(pile.sommet()[0]-1,pile.sommet()[1]))
+                current_cell = pile.sommet()[0]-1
+                nombre_coups +=1
+
+
+            elif cote_choisi == 2 and current_cell[0] != (self.n)-1 and pile.sommet()[0] != (self.n)-1 and pile.sommet()[0]+1 not in sommets_visites: # on peut pas descendre plus bas que 3
+
+                self.ajouter_arete(current_cell,(pile.sommet()[0]+1,pile.sommet()[1]))
+                current_cell = pile.sommet()[0]+1
+                nombre_coups +=1
+
+            elif cote_choisi == 3 and current_cell[1] != 0 and pile.sommet()[1] != 0 and pile.sommet()[1]-1 not in sommets_visites: 
+    
+                self.ajouter_arete(current_cell,(pile.sommet()[0],pile.sommet()[1]-1))
+                current_cell = pile.sommet()[1]-1
+                nombre_coups +=1
+
+            elif cote_choisi == 4 and current_cell[1] != (self.n)-1 and pile.sommet()[1] != (self.n)-1 and pile.sommet()[1]+1 not in sommets_visites: 
+               
+                self.ajouter_arete(current_cell,(pile.sommet()[0],pile.sommet()[1]+1))
+                current_cell = pile.sommet()[1]+1
+                nombre_coups +=1
+
+            else :
+
+                if sommets_visites == len(self.A) :
+                    maze_completed = True
+
+                else : 
+                    pile.depiler()
+                    current_cell = pile.sommet()
+
+
+
+        return "Labirynthe effectué en : " + str(nombre_coups) + " essais."
 
             
         
@@ -152,7 +209,7 @@ G.creer_graphe_nxn(4)
 
 
 
-print(G.fusion_aleatoire())
+print(G.dfs_maze())
 
 #print()
 print(G.__repr__())
