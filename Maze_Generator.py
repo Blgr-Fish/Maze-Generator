@@ -154,6 +154,7 @@ class Graphe_dictionnaire:
 
         pile.empiler(current_cell)
 
+
         while not maze_completed :
             cote_choisi = random.randint(1,4) # 1 = haut, 2 = bas, 3 = gauche et 4 = droite
             sommets_visites.append(current_cell)
@@ -164,26 +165,26 @@ class Graphe_dictionnaire:
                     
   
                 self.ajouter_arete(current_cell,(pile.sommet()[0]-1,pile.sommet()[1]))
-                current_cell = pile.sommet()[0]-1
+                current_cell = (pile.sommet()[0]-1,pile.sommet()[1])
                 nombre_coups +=1
 
 
             elif cote_choisi == 2 and current_cell[0] != (self.n)-1 and pile.sommet()[0] != (self.n)-1 and pile.sommet()[0]+1 not in sommets_visites: # on peut pas descendre plus bas que 3
 
                 self.ajouter_arete(current_cell,(pile.sommet()[0]+1,pile.sommet()[1]))
-                current_cell = pile.sommet()[0]+1
+                current_cell = (pile.sommet()[0]+1,pile.sommet()[1])
                 nombre_coups +=1
 
             elif cote_choisi == 3 and current_cell[1] != 0 and pile.sommet()[1] != 0 and pile.sommet()[1]-1 not in sommets_visites: 
     
                 self.ajouter_arete(current_cell,(pile.sommet()[0],pile.sommet()[1]-1))
-                current_cell = pile.sommet()[1]-1
+                current_cell = (pile.sommet()[0],pile.sommet()[1]-1)
                 nombre_coups +=1
 
             elif cote_choisi == 4 and current_cell[1] != (self.n)-1 and pile.sommet()[1] != (self.n)-1 and pile.sommet()[1]+1 not in sommets_visites: 
                
                 self.ajouter_arete(current_cell,(pile.sommet()[0],pile.sommet()[1]+1))
-                current_cell = pile.sommet()[1]+1
+                current_cell = (pile.sommet()[0],pile.sommet()[1]+1)
                 nombre_coups +=1
 
             else :
