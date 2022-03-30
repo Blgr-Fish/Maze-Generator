@@ -27,6 +27,10 @@ class Piles :
     def sommet(self):
         if not self.est_vide():
             return self.pile[-1]
+    
+    def __repr__(self):               # méthode repr pour afficher le graphe
+        return str(self.pile)
+
 
         
 
@@ -193,7 +197,10 @@ class Graphe_dictionnaire:
                     maze_completed = True
 
                 else : 
+
                     pile.depiler()
+                    pile.__repr__()
+                    print()
                     current_cell = pile.sommet()
 
 
