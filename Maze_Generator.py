@@ -103,6 +103,7 @@ class Graphe_dictionnaire:
                 liste_valeurs.append(valeur_temp)  #... que si elles ne sont pas déjà présentes
 
         nombre_coups = 0 
+        print("Liste valeur version initiale : ", liste_valeurs)
 
         while not maze_completed :
             random_cell = random.choice(list(self.A)) # un noeud random du graphe...
@@ -110,13 +111,16 @@ class Graphe_dictionnaire:
             cote_choisi = random.randint(1,4) # 1 = haut, 2 = bas, 3 = gauche et 4 = droite
              
 
-            if cote_choisi == 1 and random_cell[0] != 0: # si ça va vers le haut et que c'est à l'index est à 0 on peut pas monter plus haut
+            if cote_choisi == 1 and random_cell[0] != 0: # si ça va vers le haut et que c'est à l'index 0 on peut pas monter plus haut
                 if liste_valeurs[random_cell[0]-1] != liste_valeurs[random_index]: # on vérifie que la valeur attribuée au noeud du dessus est différent de celle du noeud choisi
+                    print([random_cell[0]-1])
+                    print()
+                    print(liste_valeurs[random_cell[0]-1])
                     liste_valeurs[random_index] = liste_valeurs[random_cell[0]-1]  # si c'est le cas, le noeud choisi prend la valeur du noeud du dessus
                     self.ajouter_arete(random_cell,(random_cell[0]-1,random_cell[1])) # et on les joints par une arrête
                     nombre_coups +=1
 
-            if cote_choisi == 2 and random_cell[0] != (self.n)-1 : # on peut pas descendre plus bas que 3
+            if cote_choisi == 2 and random_cell[0] != (self.n)-1 : # on peut pas descendre plus bas que n-1
                 if liste_valeurs[random_cell[0]+1] != liste_valeurs[random_index]:
                     liste_valeurs[random_index] = liste_valeurs[random_cell[0]+1]
                     self.ajouter_arete(random_cell,(random_cell[0]+1,random_cell[1])) 
@@ -217,7 +221,7 @@ G.creer_graphe_nxn(4)
 
 
 
-print(G.dfs_maze())
+print(G.fusion_aleatoire())
 
 #print()
 print(G.__repr__())
