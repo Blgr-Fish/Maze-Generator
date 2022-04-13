@@ -27,6 +27,10 @@ class Piles :
     def sommet(self):
         if not self.est_vide():
             return self.pile[-1]
+    
+    def __repr__(self):               # méthode repr pour afficher le graphe
+        return str(self.pile)
+
 
         
 
@@ -99,6 +103,7 @@ class Graphe_dictionnaire:
                 liste_valeurs.append(valeur_temp)  #... que si elles ne sont pas déjà présentes
 
         nombre_coups = 0 
+        print("Liste valeur version initiale : ", liste_valeurs)
 
         while not maze_completed :
             random_cell = random.choice(list(self.A)) # un noeud random du graphe...
@@ -106,30 +111,41 @@ class Graphe_dictionnaire:
             cote_choisi = random.randint(1,4) # 1 = haut, 2 = bas, 3 = gauche et 4 = droite
              
 
-            if cote_choisi == 1 and random_cell[0] != 0: # si ça va vers le haut et que c'est à l'index est à 0 on peut pas monter plus haut
+            if cote_choisi == 1 and random_cell[0] != 0: # si ça va vers le haut et que c'est à l'index 0 on peut pas monter plus haut
                 if liste_valeurs[random_cell[0]-1] != liste_valeurs[random_index]: # on vérifie que la valeur attribuée au noeud du dessus est différent de celle du noeud choisi
+
                     liste_valeurs[random_index] = liste_valeurs[random_cell[0]-1]  # si c'est le cas, le noeud choisi prend la valeur du noeud du dessus
                     self.ajouter_arete(random_cell,(random_cell[0]-1,random_cell[1])) # et on les joints par une arrête
                     nombre_coups +=1
 
-            if cote_choisi == 2 and random_cell[0] != (self.n)-1 : # on peut pas descendre plus bas que 3
+            if cote_choisi == 2 and random_cell[0] != (self.n)-1 : # on peut pas descendre plus bas que n-1
                 if liste_valeurs[random_cell[0]+1] != liste_valeurs[random_index]:
+                    for ele in liste_valeurs :
+                        if ele == liste_valeurs[random_index]:
+                            ele = liste_valeurs[random_cell[0]+1]
                     liste_valeurs[random_index] = liste_valeurs[random_cell[0]+1]
                     self.ajouter_arete(random_cell,(random_cell[0]+1,random_cell[1])) 
                     nombre_coups +=1
 
             if cote_choisi == 3 and random_cell[1] != 0 : 
                 if liste_valeurs[random_cell[1]-1] != liste_valeurs[random_index] :
+                    for ele in liste_valeurs :
+                        if ele == liste_valeurs[random_index]:
+                            ele = liste_valeurs[random_cell[1]-1]        
                     liste_valeurs[random_index] = liste_valeurs[random_cell[1]-1]
                     self.ajouter_arete(random_cell,(random_cell[0],random_cell[1]-1))
                     nombre_coups +=1
 
             if cote_choisi == 4 and random_cell[1] != (self.n)-1 : 
                 if liste_valeurs[random_cell[1]+1] != liste_valeurs[random_index] :
+                    for ele in liste_valeurs :
+                        if ele == liste_valeurs[random_index]:
+                            ele = liste_valeurs[random_cell[1]+1]
                     liste_valeurs[random_index] = liste_valeurs[random_cell[1]+1]
                     self.ajouter_arete(random_cell,(random_cell[0],random_cell[1]+1))
                     nombre_coups +=1
-            
+            print(liste_valeurs)
+
             if liste_valeurs.count(liste_valeurs[0]) == len(liste_valeurs): # on vérifie que le nombre de valeurs égales à liste_valeurs[0] soit égal à la longueur de la liste
                 maze_completed = True # si c'est le cas, ça veut dire que toutes les valeurs sont les mêmes et donc que le graphe est complet
 
@@ -154,6 +170,7 @@ class Graphe_dictionnaire:
 
         pile.empiler(current_cell)
 
+
         while not maze_completed :
             cote_choisi = random.randint(1,4) # 1 = haut, 2 = bas, 3 = gauche et 4 = droite
             sommets_visites.append(current_cell)
@@ -164,26 +181,26 @@ class Graphe_dictionnaire:
                     
   
                 self.ajouter_arete(current_cell,(pile.sommet()[0]-1,pile.sommet()[1]))
-                current_cell = pile.sommet()[0]-1
+                current_cell = (pile.sommet()[0]-1,pile.sommet()[1])
                 nombre_coups +=1
 
 
             elif cote_choisi == 2 and current_cell[0] != (self.n)-1 and pile.sommet()[0] != (self.n)-1 and pile.sommet()[0]+1 not in sommets_visites: # on peut pas descendre plus bas que 3
 
                 self.ajouter_arete(current_cell,(pile.sommet()[0]+1,pile.sommet()[1]))
-                current_cell = pile.sommet()[0]+1
+                current_cell = (pile.sommet()[0]+1,pile.sommet()[1])
                 nombre_coups +=1
 
             elif cote_choisi == 3 and current_cell[1] != 0 and pile.sommet()[1] != 0 and pile.sommet()[1]-1 not in sommets_visites: 
     
                 self.ajouter_arete(current_cell,(pile.sommet()[0],pile.sommet()[1]-1))
-                current_cell = pile.sommet()[1]-1
+                current_cell = (pile.sommet()[0],pile.sommet()[1]-1)
                 nombre_coups +=1
 
             elif cote_choisi == 4 and current_cell[1] != (self.n)-1 and pile.sommet()[1] != (self.n)-1 and pile.sommet()[1]+1 not in sommets_visites: 
                
                 self.ajouter_arete(current_cell,(pile.sommet()[0],pile.sommet()[1]+1))
-                current_cell = pile.sommet()[1]+1
+                current_cell = (pile.sommet()[0],pile.sommet()[1]+1)
                 nombre_coups +=1
 
             else :
@@ -192,7 +209,10 @@ class Graphe_dictionnaire:
                     maze_completed = True
 
                 else : 
+
                     pile.depiler()
+                    pile.__repr__()
+                    print()
                     current_cell = pile.sommet()
 
 
@@ -209,7 +229,7 @@ G.creer_graphe_nxn(4)
 
 
 
-print(G.dfs_maze())
+print(G.fusion_aleatoire())
 
 #print()
 print(G.__repr__())
