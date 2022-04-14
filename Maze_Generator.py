@@ -108,27 +108,33 @@ class Graphe_dictionnaire:
         while not maze_completed :
             random_cell = random.choice(list(self.A)) # un noeud random du graphe...
             random_index = list(self.A).index(random_cell) #... et son index
-            cote_choisi = random.randint(1,4) # 1 = haut, 2 = bas, 3 = gauche et 4 = droite
-             
+            cote_choisi = random.randint(1,4) # 1 = bas, 2 = haut, 3 = gauche et 4 = droite
+            print(liste_valeurs)
 
-            if cote_choisi == 1 and random_cell[0] != 0: # si ça va vers le haut et que c'est à l'index 0 on peut pas monter plus haut
+            if cote_choisi == 1 and random_cell[0] != 0: # si ça va vers le bas et que c'est à l'index 0 on peut pas descendre plus bas
                 random_index_1 = list(self.A).index((random_cell[0]-1,random_cell[1]))
+                print('randm_index : ', random_index, 'liste_valeur : ', liste_valeurs[random_index])
+                print('random_index_1 : ',random_index_1, 'liste_valeur : ', liste_valeurs[random_index_1])
                 if liste_valeurs[random_index_1] != liste_valeurs[random_index]: # on vérifie que la valeur attribuée au noeud du dessus est différent de celle du noeud choisi
-                    for ele in liste_valeurs :
-                        if ele == liste_valeurs[random_index]:
-                            ele = liste_valeurs[random_index_1]
+                    for i in range(longueur) :
+
+                        print("ele : ", liste_valeurs[i])
+                        if liste_valeurs[i] == liste_valeurs[random_index]:
+                            liste_valeurs[i] = liste_valeurs[random_index_1]
                     
                     liste_valeurs[random_index] = liste_valeurs[random_index_1]  # si c'est le cas, le noeud choisi prend la valeur du noeud du dessus
                     self.ajouter_arete(random_cell,(random_cell[0]-1,random_cell[1])) # et on les joints par une arrête
                     nombre_coups +=1
 
            
-            if cote_choisi == 2 and random_cell[0] != (self.n)-1 : # on peut pas descendre plus bas que n-1
+            if cote_choisi == 2 and random_cell[0] != (self.n)-1 : # on peut pas monter plus haut que n-1
                 random_index_2 =  list(self.A).index((random_cell[0]+1,random_cell[1]))
                 if liste_valeurs[random_index_2] != liste_valeurs[random_index]:
-                    for ele in liste_valeurs :
-                        if ele == liste_valeurs[random_index]:
-                            ele = liste_valeurs[random_index_2]
+                    for i in range(longueur) :
+
+                        print("ele : ", liste_valeurs[i])
+                        if liste_valeurs[i] == liste_valeurs[random_index]:
+                            liste_valeurs[i] = liste_valeurs[random_index_2]
                     
                     liste_valeurs[random_index] = liste_valeurs[random_index_2]
                     self.ajouter_arete(random_cell,(random_cell[0]+1,random_cell[1])) 
@@ -138,9 +144,11 @@ class Graphe_dictionnaire:
             if cote_choisi == 3 and random_cell[1] != 0 : 
                 random_index_3 =  list(self.A).index((random_cell[0],random_cell[1]-1))
                 if liste_valeurs[random_index_3] != liste_valeurs[random_index] :
-                    for ele in liste_valeurs :
-                        if ele == liste_valeurs[random_index]:
-                            ele = liste_valeurs[random_index_3]        
+                    for i in range(longueur) :
+
+                        print("ele : ", liste_valeurs[i])
+                        if liste_valeurs[i] == liste_valeurs[random_index]:
+                            liste_valeurs[i] = liste_valeurs[random_index_3]        
                    
                     liste_valeurs[random_index] = liste_valeurs[random_index_3]
                     self.ajouter_arete(random_cell,(random_cell[0],random_cell[1]-1))
@@ -150,15 +158,17 @@ class Graphe_dictionnaire:
             if cote_choisi == 4 and random_cell[1] != (self.n)-1 :
                 random_index_4 =  list(self.A).index((random_cell[0],random_cell[1]+1)) 
                 if liste_valeurs[random_index_4] != liste_valeurs[random_index] :
-                    for ele in liste_valeurs :
-                        if ele == liste_valeurs[random_index]:
-                            ele = liste_valeurs[random_index_4]
+                    for i in range(longueur) :
+
+                        print("ele : ", liste_valeurs[i])
+                        if liste_valeurs[i] == liste_valeurs[random_index]:
+                            liste_valeurs[i] = liste_valeurs[random_index_4]
                    
                     liste_valeurs[random_index] = liste_valeurs[random_index_4]
                     self.ajouter_arete(random_cell,(random_cell[0],random_cell[1]+1))
                     nombre_coups +=1
           
-            print(liste_valeurs)
+            
 
             if liste_valeurs.count(liste_valeurs[0]) == len(liste_valeurs): # on vérifie que le nombre de valeurs égales à liste_valeurs[0] soit égal à la longueur de la liste
                 maze_completed = True # si c'est le cas, ça veut dire que toutes les valeurs sont les mêmes et donc que le graphe est complet
