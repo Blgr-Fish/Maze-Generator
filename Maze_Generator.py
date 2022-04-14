@@ -61,8 +61,8 @@ class Graphe_dictionnaire:
             if y not in self.A[x]:
                 self.A[x].append(y)
            
-            #if x not in self.A[y]:    # pour les graphes non orientés 
-            #    self.A[y].append(x)   
+                if x not in self.A[y]:    # pour les graphes non orientés 
+                    self.A[y].append(x)   
 
     
     def creer_graphe_nxn(self,n):    # créer un graphe de n x n taille 
@@ -122,7 +122,7 @@ class Graphe_dictionnaire:
                         if liste_valeurs[i] == liste_valeurs[random_index]:
                             liste_valeurs[i] = liste_valeurs[random_index_1]
                     
-                    liste_valeurs[random_index] = liste_valeurs[random_index_1]  # si c'est le cas, le noeud choisi prend la valeur du noeud du dessus
+                    #liste_valeurs[random_index] = liste_valeurs[random_index_1]  # si c'est le cas, le noeud choisi prend la valeur du noeud du dessus
                     self.ajouter_arete(random_cell,(random_cell[0]-1,random_cell[1])) # et on les joints par une arrête
                     nombre_coups +=1
 
@@ -136,7 +136,7 @@ class Graphe_dictionnaire:
                         if liste_valeurs[i] == liste_valeurs[random_index]:
                             liste_valeurs[i] = liste_valeurs[random_index_2]
                     
-                    liste_valeurs[random_index] = liste_valeurs[random_index_2]
+                    #liste_valeurs[random_index] = liste_valeurs[random_index_2]
                     self.ajouter_arete(random_cell,(random_cell[0]+1,random_cell[1])) 
                     nombre_coups +=1
 
@@ -150,7 +150,7 @@ class Graphe_dictionnaire:
                         if liste_valeurs[i] == liste_valeurs[random_index]:
                             liste_valeurs[i] = liste_valeurs[random_index_3]        
                    
-                    liste_valeurs[random_index] = liste_valeurs[random_index_3]
+                    #liste_valeurs[random_index] = liste_valeurs[random_index_3]
                     self.ajouter_arete(random_cell,(random_cell[0],random_cell[1]-1))
                     nombre_coups +=1
 
@@ -164,7 +164,7 @@ class Graphe_dictionnaire:
                         if liste_valeurs[i] == liste_valeurs[random_index]:
                             liste_valeurs[i] = liste_valeurs[random_index_4]
                    
-                    liste_valeurs[random_index] = liste_valeurs[random_index_4]
+                    #liste_valeurs[random_index] = liste_valeurs[random_index_4]
                     self.ajouter_arete(random_cell,(random_cell[0],random_cell[1]+1))
                     nombre_coups +=1
           
