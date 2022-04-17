@@ -53,10 +53,6 @@ class Graphe_dictionnaire:
     
 
     def ajouter_arete(self,x, y):     # ajoute une arrête entre 2 noeuds
-        if y not in self.A.keys():
-            self.ajouter_sommet(y)    # on vérifie que le noeud existe ou pas dans le graphe
-            
-
         if x != y:                    # pour pas qu'on puisse faire une arrete avec le meme noeud
             if y not in self.A[x]:
                 self.A[x].append(y)
@@ -66,8 +62,8 @@ class Graphe_dictionnaire:
 
     
     def creer_graphe_nxn(self,n):    # créer un graphe de n x n taille 
-        #assert type(n) is int
-        #assert n >= 1
+        assert type(n) == int
+        assert n >= 1
         self.n = n
         for i in range(self.n):
             for j in range(self.n):
@@ -102,8 +98,7 @@ class Graphe_dictionnaire:
             if valeur_temp not in liste_valeurs : 
                 liste_valeurs.append(valeur_temp)  #... que si elles ne sont pas déjà présentes
 
-        nombre_coups = 0 
-        print("Liste valeur version initiale : ", liste_valeurs)
+        self.nombre_coups = 0 
 
         while not maze_completed :
             random_cell = random.choice(list(self.A)) # un noeud random du graphe...
@@ -113,68 +108,68 @@ class Graphe_dictionnaire:
 
             if cote_choisi == 1 and random_cell[0] != 0: # si ça va vers le bas et que c'est à l'index 0 on peut pas descendre plus bas
                 random_index_1 = list(self.A).index((random_cell[0]-1,random_cell[1]))
-                print('randm_index : ', random_index, 'liste_valeur : ', liste_valeurs[random_index])
-                print('random_index_1 : ',random_index_1, 'liste_valeur : ', liste_valeurs[random_index_1])
                 if liste_valeurs[random_index_1] != liste_valeurs[random_index]: # on vérifie que la valeur attribuée au noeud du dessus est différent de celle du noeud choisi
+                    self.ajouter_arete(random_cell,(random_cell[0]-1,random_cell[1])) # et on les joints par une arrête
+                    
                     for i in range(longueur) :
-
-                        print("ele : ", liste_valeurs[i])
                         if liste_valeurs[i] == liste_valeurs[random_index]:
                             liste_valeurs[i] = liste_valeurs[random_index_1]
                     
-                    #liste_valeurs[random_index] = liste_valeurs[random_index_1]  # si c'est le cas, le noeud choisi prend la valeur du noeud du dessus
-                    self.ajouter_arete(random_cell,(random_cell[0]-1,random_cell[1])) # et on les joints par une arrête
-                    nombre_coups +=1
+                    
+                    self.nombre_coups +=1
 
            
             if cote_choisi == 2 and random_cell[0] != (self.n)-1 : # on peut pas monter plus haut que n-1
                 random_index_2 =  list(self.A).index((random_cell[0]+1,random_cell[1]))
                 if liste_valeurs[random_index_2] != liste_valeurs[random_index]:
+                    self.ajouter_arete(random_cell,(random_cell[0]+1,random_cell[1]))
                     for i in range(longueur) :
 
-                        print("ele : ", liste_valeurs[i])
+                        #print("ele : ", liste_valeurs[i])
                         if liste_valeurs[i] == liste_valeurs[random_index]:
                             liste_valeurs[i] = liste_valeurs[random_index_2]
                     
                     #liste_valeurs[random_index] = liste_valeurs[random_index_2]
-                    self.ajouter_arete(random_cell,(random_cell[0]+1,random_cell[1])) 
-                    nombre_coups +=1
+                     
+                    self.nombre_coups +=1
 
             
             if cote_choisi == 3 and random_cell[1] != 0 : 
                 random_index_3 =  list(self.A).index((random_cell[0],random_cell[1]-1))
                 if liste_valeurs[random_index_3] != liste_valeurs[random_index] :
+                    self.ajouter_arete(random_cell,(random_cell[0],random_cell[1]-1))
                     for i in range(longueur) :
 
-                        print("ele : ", liste_valeurs[i])
+                        #print("ele : ", liste_valeurs[i])
                         if liste_valeurs[i] == liste_valeurs[random_index]:
                             liste_valeurs[i] = liste_valeurs[random_index_3]        
                    
                     #liste_valeurs[random_index] = liste_valeurs[random_index_3]
-                    self.ajouter_arete(random_cell,(random_cell[0],random_cell[1]-1))
-                    nombre_coups +=1
+                    
+                    self.nombre_coups +=1
 
             
             if cote_choisi == 4 and random_cell[1] != (self.n)-1 :
                 random_index_4 =  list(self.A).index((random_cell[0],random_cell[1]+1)) 
                 if liste_valeurs[random_index_4] != liste_valeurs[random_index] :
+                    self.ajouter_arete(random_cell,(random_cell[0],random_cell[1]+1))
                     for i in range(longueur) :
 
-                        print("ele : ", liste_valeurs[i])
+                        #print("ele : ", liste_valeurs[i])
                         if liste_valeurs[i] == liste_valeurs[random_index]:
                             liste_valeurs[i] = liste_valeurs[random_index_4]
                    
                     #liste_valeurs[random_index] = liste_valeurs[random_index_4]
-                    self.ajouter_arete(random_cell,(random_cell[0],random_cell[1]+1))
-                    nombre_coups +=1
+                    
+                    self.nombre_coups +=1
           
             
 
-            if liste_valeurs.count(liste_valeurs[0]) == len(liste_valeurs): # on vérifie que le nombre de valeurs égales à liste_valeurs[0] soit égal à la longueur de la liste
+            if all(element == liste_valeurs[0] for element in liste_valeurs): # on vérifie que le nombre de valeurs égales à liste_valeurs[0] soit égal à la longueur de la liste
                 maze_completed = True # si c'est le cas, ça veut dire que toutes les valeurs sont les mêmes et donc que le graphe est complet
 
             
-        return "Labirynthe effectué en : " + str(nombre_coups) + " essais."
+        return "Labirynthe effectué en : " + str(self.nombre_coups) + " essais."
 
    
    
@@ -247,16 +242,13 @@ class Graphe_dictionnaire:
         
 #TESTS
 
-G = Graphe_dictionnaire()
-
-G.creer_graphe_nxn(4)
-
-
-
-print(G.fusion_aleatoire())
-
-#print()
-print(G.__repr__())
+while True:
+    G = Graphe_dictionnaire()
+    G.creer_graphe_nxn(4)
+    G.fusion_aleatoire()
+    if G.nombre_coups == 20:
+        print(G.__repr__())
+        break
 
 
 #     0  1  2  3
