@@ -8,32 +8,6 @@ Created on Mon Mar  7 12:50:10 2022
 
 import random
 
-
-class Piles :
-
-    def __init__(self) -> None:
-        self.pile = []
-
-    def est_vide (self) :
-        return self.pile==[]
-
-    def empiler (self, element) :
-        self.pile.append(element)
-
-    def depiler (self) :
-        if not self.est_vide():
-            del self.pile[-1]
-
-    def sommet(self):
-        if not self.est_vide():
-            return self.pile[-1]
-    
-    def __repr__(self):               # méthode repr pour afficher le graphe
-        return str(self.pile)
-
-
-        
-
 class Graphe_dictionnaire:
 
     def __init__(self):               # On initialise un dictionnaire vide
@@ -70,184 +44,98 @@ class Graphe_dictionnaire:
                 self.ajouter_sommet((i,j))
 
 
-
-    """def wilson(self):                  # algo wilson
-        maze_completed = False
-        self.first_cell = random.choice(list(self.A)) # créer la cellule initiale de manière aléatoire
-        sommets_verifies = [self.first_cell]
-
-        while not maze_completed:
-            self.random_cell = random.choice(list(self.A))
-            if self.random_cell not in  sommets_verifies:     # si la cellule choisie au hasard n'est pas dans les sommets verifies
-                
-                
-                
-                
-                sommets_verifies.append(self.random_cell)     # on ajoute la random_cell dans les sommets visites
-                
-                # il faut faire en sorte de rejoindre random_cell et first_cell maintenant"""
-    
+   
     def fusion_aleatoire(self):
         maze_completed = False # Passe à True quand le labyrinthe est complet
         liste_valeurs = [] # Liste des valeurs attribuées à chaque noeud du graphe, de 0 à la longueur du graphe
         longueur = len(self.A) # Longueur du Graphe
 
-        while len(liste_valeurs) < longueur : # On rempli tant que liste valeurs est inférieur la longueur du graphe
-            valeur_temp = random.randint(0,longueur) # On rempli la liste de valeur au hasard...
 
-            if valeur_temp not in liste_valeurs : 
-                liste_valeurs.append(valeur_temp)  #... que si elles ne sont pas déjà présentes
+        for i in range (longueur):
+            liste_valeurs.append(i) # on assigne une valeur unique à une cellule, de 0 à len du graphe
 
-        self.nombre_coups = 0 
+
+        self.nombre_coups = 0 # compteur d'étapes pour la réalisation du labyrinthe
 
         while not maze_completed :
             random_cell = random.choice(list(self.A)) # un noeud random du graphe...
             random_index = list(self.A).index(random_cell) #... et son index
             cote_choisi = random.randint(1,4) # 1 = bas, 2 = haut, 3 = gauche et 4 = droite
-            print(liste_valeurs)
+            #print(liste_valeurs)
 
             if cote_choisi == 1 and random_cell[0] != 0: # si ça va vers le bas et que c'est à l'index 0 on peut pas descendre plus bas
-                random_index_1 = list(self.A).index((random_cell[0]-1,random_cell[1]))
-                if liste_valeurs[random_index_1] != liste_valeurs[random_index]: # on vérifie que la valeur attribuée au noeud du dessus est différent de celle du noeud choisi
+                random_index_1 = list(self.A).index((random_cell[0]-1,random_cell[1])) # l'index de la cellule du dessous
+                
+                if liste_valeurs[random_index_1] != liste_valeurs[random_index]: # on vérifie que la valeur attribuée au noeud du dessous est différent de celle du noeud choisi
                     self.ajouter_arete(random_cell,(random_cell[0]-1,random_cell[1])) # et on les joints par une arrête
-                    
-                    for i in range(longueur) :
-                        if liste_valeurs[i] == liste_valeurs[random_index]:
-                            liste_valeurs[i] = liste_valeurs[random_index_1]
-                    
+
+                    for i in range(longueur) : 
+                        
+                        if liste_valeurs[i] == liste_valeurs[random_index_1]: # on s'assure que toutes les autres cellules ayant la même valeur soient modifiées
+                            liste_valeurs[i] = liste_valeurs[random_index]
                     
                     self.nombre_coups +=1
 
            
-            if cote_choisi == 2 and random_cell[0] != (self.n)-1 : # on peut pas monter plus haut que n-1
-                random_index_2 =  list(self.A).index((random_cell[0]+1,random_cell[1]))
+            elif cote_choisi == 2 and random_cell[0] != (self.n)-1 : # pour le haut
+                random_index_2 = list(self.A).index((random_cell[0]+1,random_cell[1]))
+                
                 if liste_valeurs[random_index_2] != liste_valeurs[random_index]:
                     self.ajouter_arete(random_cell,(random_cell[0]+1,random_cell[1]))
+                    
                     for i in range(longueur) :
 
-                        #print("ele : ", liste_valeurs[i])
-                        if liste_valeurs[i] == liste_valeurs[random_index]:
-                            liste_valeurs[i] = liste_valeurs[random_index_2]
+                        if liste_valeurs[i] == liste_valeurs[random_index_2]:
+                            liste_valeurs[i] = liste_valeurs[random_index]
                     
-                    #liste_valeurs[random_index] = liste_valeurs[random_index_2]
-                     
                     self.nombre_coups +=1
 
             
-            if cote_choisi == 3 and random_cell[1] != 0 : 
-                random_index_3 =  list(self.A).index((random_cell[0],random_cell[1]-1))
+            elif cote_choisi == 3 and random_cell[1] != 0 : # pour la gauche
+                random_index_3 = list(self.A).index((random_cell[0],random_cell[1]-1))
+
                 if liste_valeurs[random_index_3] != liste_valeurs[random_index] :
                     self.ajouter_arete(random_cell,(random_cell[0],random_cell[1]-1))
+
                     for i in range(longueur) :
 
-                        #print("ele : ", liste_valeurs[i])
-                        if liste_valeurs[i] == liste_valeurs[random_index]:
-                            liste_valeurs[i] = liste_valeurs[random_index_3]        
-                   
-                    #liste_valeurs[random_index] = liste_valeurs[random_index_3]
-                    
+                        if liste_valeurs[i] == liste_valeurs[random_index_3]:
+                            liste_valeurs[i] = liste_valeurs[random_index]        
+                
                     self.nombre_coups +=1
 
             
-            if cote_choisi == 4 and random_cell[1] != (self.n)-1 :
-                random_index_4 =  list(self.A).index((random_cell[0],random_cell[1]+1)) 
+            elif cote_choisi == 4 and random_cell[1] != (self.n)-1 : # pour la droite
+                random_index_4 = list(self.A).index((random_cell[0],random_cell[1]+1)) 
+
                 if liste_valeurs[random_index_4] != liste_valeurs[random_index] :
                     self.ajouter_arete(random_cell,(random_cell[0],random_cell[1]+1))
+
                     for i in range(longueur) :
 
-                        #print("ele : ", liste_valeurs[i])
-                        if liste_valeurs[i] == liste_valeurs[random_index]:
-                            liste_valeurs[i] = liste_valeurs[random_index_4]
+                        if liste_valeurs[i] == liste_valeurs[random_index_4]:
+                            liste_valeurs[i] = liste_valeurs[random_index]
                    
-                    #liste_valeurs[random_index] = liste_valeurs[random_index_4]
-                    
                     self.nombre_coups +=1
           
             
 
             if all(element == liste_valeurs[0] for element in liste_valeurs): # on vérifie que le nombre de valeurs égales à liste_valeurs[0] soit égal à la longueur de la liste
-                maze_completed = True # si c'est le cas, ça veut dire que toutes les valeurs sont les mêmes et donc que le graphe est complet
+                maze_completed = True # si c'est le cas, ça veut dire que toutes les valeurs sont les mêmes et donc que le labyrinthe est terminé
 
             
-        return "Labirynthe effectué en : " + str(self.nombre_coups) + " essais."
-
-   
-   
-   
-   
-   
-   
-   
-    def dfs_maze(self):
-        pile = Piles()
-        sommets_visites = []
-        maze_completed = False
-        nombre_coups = 0
-
-        current_cell = random.choice(list(self.A)) # un noeud random du graphe...
-        
-
-        pile.empiler(current_cell)
+        #return "Labirynthe effectué en : " + str(self.nombre_coups) + " essais."
 
 
-        while not maze_completed :
-            cote_choisi = random.randint(1,4) # 1 = haut, 2 = bas, 3 = gauche et 4 = droite
-            sommets_visites.append(current_cell)
-            print(sommets_visites)
-             
-           
-            if cote_choisi == 1 and current_cell[0] != 0 and pile.sommet()[0] != 0 and pile.sommet()[0]-1 not in sommets_visites: # si ça va vers le haut et que c'est à l'index est à 0 on peut pas monter plus haut
-                    
-  
-                self.ajouter_arete(current_cell,(pile.sommet()[0]-1,pile.sommet()[1]))
-                current_cell = (pile.sommet()[0]-1,pile.sommet()[1])
-                nombre_coups +=1
-
-
-            elif cote_choisi == 2 and current_cell[0] != (self.n)-1 and pile.sommet()[0] != (self.n)-1 and pile.sommet()[0]+1 not in sommets_visites: # on peut pas descendre plus bas que 3
-
-                self.ajouter_arete(current_cell,(pile.sommet()[0]+1,pile.sommet()[1]))
-                current_cell = (pile.sommet()[0]+1,pile.sommet()[1])
-                nombre_coups +=1
-
-            elif cote_choisi == 3 and current_cell[1] != 0 and pile.sommet()[1] != 0 and pile.sommet()[1]-1 not in sommets_visites: 
-    
-                self.ajouter_arete(current_cell,(pile.sommet()[0],pile.sommet()[1]-1))
-                current_cell = (pile.sommet()[0],pile.sommet()[1]-1)
-                nombre_coups +=1
-
-            elif cote_choisi == 4 and current_cell[1] != (self.n)-1 and pile.sommet()[1] != (self.n)-1 and pile.sommet()[1]+1 not in sommets_visites: 
-               
-                self.ajouter_arete(current_cell,(pile.sommet()[0],pile.sommet()[1]+1))
-                current_cell = (pile.sommet()[0],pile.sommet()[1]+1)
-                nombre_coups +=1
-
-            else :
-
-                if sommets_visites == len(self.A) :
-                    maze_completed = True
-
-                else : 
-
-                    pile.depiler()
-                    pile.__repr__()
-                    print()
-                    current_cell = pile.sommet()
-
-
-
-        return "Labirynthe effectué en : " + str(nombre_coups) + " essais."
-
-            
-        
 #TESTS
 
 while True:
     G = Graphe_dictionnaire()
-    G.creer_graphe_nxn(4)
+    G.creer_graphe_nxn(5)
     G.fusion_aleatoire()
-    if G.nombre_coups == 20:
+    if G.nombre_coups == (G.n)**2:
         print(G.__repr__())
+        print(G.nombre_coups)
         break
 
 
