@@ -123,20 +123,22 @@ class Graphe_dictionnaire:
             if all(element == liste_valeurs[0] for element in liste_valeurs): # on vérifie que le nombre de valeurs égales à liste_valeurs[0] soit égal à la longueur de la liste
                 maze_completed = True # si c'est le cas, ça veut dire que toutes les valeurs sont les mêmes et donc que le labyrinthe est terminé
 
-            
         #return "Labirynthe effectué en : " + str(self.nombre_coups) + " essais."
 
 
 #TESTS
-
+a=1
 while True:
     G = Graphe_dictionnaire()
     G.creer_graphe_nxn(5)
     G.fusion_aleatoire()
-    if G.nombre_coups == (G.n)**2:
+    
+    print("labyrinthe n°" + str(a))
+    if G.nombre_coups == ((G.n)**2)+1:
         print(G.__repr__())
         print(G.nombre_coups)
         break
+    a+=1
 
 
 #     0  1  2  3
