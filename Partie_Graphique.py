@@ -115,7 +115,7 @@ def turtle_truc(n,G):
 
                 
 
-cote3= [{'N': True, 'E': False, 'S': False, 'O': True}, {'N': False, 'E': True, 'S': False, 'O': True}, {'N': True, 'E': True, 'S': False, 'O': False}, {'N': True, 'E': False, 'S': True, 'O': False}, {'N': True, 'E': False, 'S': False, 'O': True}, {'N': True, 'E': True, 'S': True, 'O': False}, {'N': False, 'E': False, 'S': True, 'O': True}, {'N': False, 'E': True, 'S': True, 'O': True}, {'N': False, 'E': True, 'S': True, 'O': False}]
+cote3= [{'N': False, 'E': True, 'S': True, 'O': False}, {'N': False, 'E': True, 'S': True, 'O': True}, {'N': False, 'E': False, 'S': True, 'O': True}, {'N': True, 'E': True, 'S': True, 'O': False}, {'N': True, 'E': True, 'S': True, 'O': True}, {'N': True, 'E': False, 'S': False, 'O': True}, {'N': True, 'E': True, 'S': False, 'O': False}, {'N': True, 'E': True, 'S': False, 'O': True}, {'N': False, 'E': False, 'S': False, 'O': True}]
 
 print(cote3[0]['N']) # Renvoie True
 
