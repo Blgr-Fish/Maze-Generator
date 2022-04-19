@@ -130,7 +130,7 @@ class Graphe_dictionnaire:
 a=1
 while True:
     G = Graphe_dictionnaire()
-    G.creer_graphe_nxn(5)
+    G.creer_graphe_nxn(4)
     G.fusion_aleatoire()
     
     print("labyrinthe n°" + str(a))
