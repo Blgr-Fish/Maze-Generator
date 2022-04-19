@@ -14,7 +14,7 @@ def turtle_truc(n,G):
     etape = 0
     key_list = list(G.keys())
     val_list = list(G.values())
-    print(len(key_list))
+    print(key_list)
     print(val_list)
     longueur = n
 
@@ -74,7 +74,7 @@ def turtle_truc(n,G):
                                 setpos(max(key_list[i][1],key_list[j][1]),key_list[j][0])
                                 setheading(90)
                                
-                                forward(0.001)
+                                forward(1)
                                 pd()
                                 forward(0.999)                    
                         
@@ -170,7 +170,7 @@ A.creer_graphe_nxn(10)
 A.fusion_aleatoire()"""
 
 E = {(0, 0): [(0, 1)], (0, 1): [(0, 2), (0, 0), (1, 1)], (0, 2): [(1, 2), (0, 1), (0, 1)], (1, 0): [(2, 0), (2, 0)], (1, 1): [(0, 1), (1, 2), (1, 2)], (1, 2): [(0, 2), (2, 2), (1, 1), (0, 2)], (2, 0): [(2, 1), (2, 1), (1, 0)], (2, 1): [(2, 0), (2, 2)], (2, 2): [(2, 1), (1, 2), (1, 2)]}
-print(turtle_truc(sqrt(len(cote5)),cote5))
+print(turtle_truc(sqrt(len(cote3)),cote3))
 
 
 
