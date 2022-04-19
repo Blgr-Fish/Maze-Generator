@@ -4,9 +4,10 @@ from math import *
 from turtle import *
 
 def turtle_truc(n,G):
-    setworldcoordinates(0, 0, n, n)
+    #setworldcoordinates(0,-n,n,0)
+    setworldcoordinates(-5,-5,5,5)
     title("Maze Generator")
-    speed(10) 
+    speed(6) 
     pensize(1)
 
     maze_completed = False
@@ -50,14 +51,14 @@ def turtle_truc(n,G):
                    
                
         while etape == 2 :
-            for i in range(len(G)):
-                for j in range(len(G)) :
+            for i in range(3):
+                for j in range(3) :
                     if G[i]['N'] == True :
                         
                         pencolor('white')
                         pu()
-                        setpos(i,j)
-                        setheading(90)     
+                        setpos(j,i)
+                        setheading(180)     
                         forward(0.001)
                         pd()
                         forward(0.999)                    
@@ -65,8 +66,8 @@ def turtle_truc(n,G):
                     elif G[i]['S'] == True :
                         pencolor('white')
                         pu()
-                        setpos(i,j)
-                        setheading(270)     
+                        setpos(j,i+1)
+                        setheading(180)     
                         forward(0.001)
                         pd()
                         forward(0.999)
@@ -74,8 +75,8 @@ def turtle_truc(n,G):
                     elif G[i]['E'] == True :
                         pencolor('white')
                         pu()
-                        setpos(i,j)
-                        setheading(180)     
+                        setpos(j+1,i)
+                        setheading(90)     
                         forward(0.001)
                         pd()
                         forward(0.999)
@@ -83,8 +84,8 @@ def turtle_truc(n,G):
                     elif G[i]['O'] == True :
                         pencolor('white')
                         pu()
-                        setpos(i,j)
-                        setheading(0)     
+                        setpos(j-1,i)
+                        setheading(90)     
                         forward(0.001)
                         pd()
                         forward(0.999)
@@ -115,7 +116,10 @@ def turtle_truc(n,G):
 
                 
 
-cote3= [{'N': False, 'E': True, 'S': True, 'O': False}, {'N': False, 'E': True, 'S': True, 'O': True}, {'N': False, 'E': False, 'S': True, 'O': True}, {'N': True, 'E': True, 'S': True, 'O': False}, {'N': True, 'E': True, 'S': True, 'O': True}, {'N': True, 'E': False, 'S': False, 'O': True}, {'N': True, 'E': True, 'S': False, 'O': False}, {'N': True, 'E': True, 'S': False, 'O': True}, {'N': False, 'E': False, 'S': False, 'O': True}]
+cote3= [{'N': False, 'E': True, 'S': False, 'O': False}, {'N': False, 'E': False, 'S': True, 'O': True},  {'N': False, 'E': False, 'S': True, 'O': False},
+        {'N': False, 'E': True, 'S': True, 'O': False},  {'N': True, 'E': True, 'S': False, 'O': True},   {'N': True, 'E': False, 'S': True, 'O': True}, 
+        {'N': True, 'E': False, 'S': False, 'O': False}, {'N': False, 'E': True, 'S': False, 'O': False}, {'N': True, 'E': False, 'S': False, 'O': True}]
+
 
 print(cote3[0]['N']) # Renvoie True
 
