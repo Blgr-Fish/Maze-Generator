@@ -142,6 +142,24 @@ def direction_fusions_2_cases(case1, case2) :  #Case1 --> case actuel et Case2 -
         
     return direction
     
+
+def transformation(index_labyrinthe) :
+    """
+    Entrée :Une liste de tuple de coordonées (index_labyrinthe) et une liste de dictionnaires avec les directions et les booléens (direction_labyrinthe)
+    Sortie : Un dictionnaire avec pour clé un tuple de coordonnées et pour valeurs associées à cette clé, les coordonnées des cases voisines directement reliées à la case en question
+    Rôle : Tranformer la sortie des fonctions de génération de labyrinthe en un format lisible par l'interprétateur graphique 
+    """
+    lab_final_lisible = {}
+    
+    for i in range(len(index_labyrinthe)) :
+        
+        lab_final_lisible[index_labyrinthe[i]] =  voisins_case_toutes_directions(index_labyrinthe[i] , index_labyrinthe)
+    
+   
+    return lab_final_lisible
+
+
+
     
 def creer_lab_Aldous_frerot(n) :
     """
@@ -161,9 +179,9 @@ def creer_lab_Aldous_frerot(n) :
             index_lab_final.append((i,j))  # On créer une liste de tuples qui sont les coordonnées des cases
             lab_final.append(creer_case()) # On crée une liste de dictionnaires 
             
-            
     case_actuelle = random.choice(index_lab_final)    #La 1er case est une case au hasard dans le labyrinthe
     indice_case_actuelle = index_lab_final.index(case_actuelle)   #On récupère l'indice de la case
+    cases_visitees.append(case_actuelle) #On considère la case de départ comme visitée
     
     while maze_completed == False :
         cases_voisines_case_actuelle = voisins_case_toutes_directions(case_actuelle, index_lab_final)  #On met dans une variable les cases voisines à la case actuelle
@@ -185,22 +203,39 @@ def creer_lab_Aldous_frerot(n) :
         indice_case_actuelle = index_lab_final.index(case_actuelle)    #On récupère le nouvelle indice de cette case
 
 
-        if cases_voisines_case_actuelle not in cases_visitees :
-            cases_visitees.append(cases_voisines_case_actuelle) #On marque la case comme visité si on ne la pas déjà fait avant (pour qu'il n'y ait pas de doublons)
+        if case_voisine_choisie not in cases_visitees :
+            cases_visitees.append(case_voisine_choisie) #On marque la case comme visité si on ne la pas déjà fait avant (pour qu'il n'y ait pas de doublons)
+         
+            
          
         if len(cases_visitees) == n**2 : # Quand on a visités toutes les cases c'est fini 
             maze_completed = True
     
-    lab_final.reverse() 
+    lab_final.reverse() # Sans le reverse, le premier termes était en bas à droite du labyrinthe
     
-    return lab_final       
+    
+    
+    return transformation(index_lab_final)  # Sors un format lisible pour l'interpreteur graphique 
         
+       
+        
+       
+
+
+
+
+
+        
+       
+print(creer_lab_Aldous_frerot(4))        
        
         
        
         
        
-print(creer_lab_Aldous_frerot(3))        
+        
+       
+ 
+        
        
         
-     
