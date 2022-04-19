@@ -100,7 +100,32 @@ def direction_inverse(direction) :
     return temp
 
 
+
+def get_voisins_case_directions(case, direction) :
+
+    """
+    Entrée : Une cases
+    Sortie : Une case représentée par un tuple de coordonnées
+    Rôle : Indique les coordonnées de la case voisine à la case actuelle dans une direction précise
+    """
+
+    temp = None
+    if direction == 'O' :
+        temp = (case[0]-1,case[1])
         
+    if direction == 'E' :
+        temp = (case[0]+1, case[1])
+        
+    if direction == 'N' :
+        temp = (case[0] , case[1]+1)
+        
+    if direction == 'S' :
+        temp = (case[0] , case[1]-1)
+        
+        
+    return temp
+
+
 
 def voisins_case_toutes_directions(case, index_lab_final) :
     """
@@ -135,33 +160,41 @@ def direction_fusions_2_cases(case1, case2) :  #Case1 --> case actuel et Case2 -
         direction = 'O'
     if case1[0] == case2[0] and case1[1] == case2[1]+1 :
         direction = 'E'
-    if case1[0] == case2[0]-1 and case1[1] == case2[1] :
-        direction = 'N'
     if case1[0] == case2[0]+1 and case1[1] == case2[1] :
+        direction = 'N'
+    if case1[0] == case2[0]-1 and case1[1] == case2[1] :
         direction = 'S'
         
     return direction
     
 
-def transformation(index_labyrinthe) :
+def transformation(test_index , test_card) :
     """
     Entrée :Une liste de tuple de coordonées (index_labyrinthe) et une liste de dictionnaires avec les directions et les booléens (direction_labyrinthe)
     Sortie : Un dictionnaire avec pour clé un tuple de coordonnées et pour valeurs associées à cette clé, les coordonnées des cases voisines directement reliées à la case en question
     Rôle : Tranformer la sortie des fonctions de génération de labyrinthe en un format lisible par l'interprétateur graphique 
-    """
-    lab_final_lisible = {}
+    """ 
+    relai_direction = ['N','E','S','O']
     
-    for i in range(len(index_labyrinthe)) :
-        
-        lab_final_lisible[index_labyrinthe[i]] =  voisins_case_toutes_directions(index_labyrinthe[i] , index_labyrinthe)
+    produit_final = {}
     
-   
-    return lab_final_lisible
+    temp = []
+    
+    for i in range(len(test_card)) :
+        for ele in relai_direction :  #On regarde les 4 directions
+            if mur_ouvert(test_card[i], ele) == True :  #Si il y a une ouverture dans la direction de la case
+                if get_voisins_case_directions(test_index[i], ele) in test_index :
+                    temp.append(get_voisins_case_directions(test_index[i], ele))
+        produit_final[test_index[i]] =  temp
+        temp = []
+
+
+    return produit_final
 
 
 
     
-def creer_lab_Aldous_frerot(n) :
+def creer_lab_Aldous_frerot(n,m) :  # n est la longueur et m la largeur 
     """
     Entrée : Un entier qui donne les dimensions du labyrinthe 
     Sortie : Une liste de dictionnaires avec les directions et les booléens (le tout forme un labyrinthe) 
@@ -175,7 +208,7 @@ def creer_lab_Aldous_frerot(n) :
     
     
     for i in range(n) :                 # Axe des abscisses <---> 
-        for j in range(n) :             # Axe des ordonnées (vers le haut)
+        for j in range(m) :             # Axe des ordonnées (vers le haut)
             index_lab_final.append((i,j))  # On créer une liste de tuples qui sont les coordonnées des cases
             lab_final.append(creer_case()) # On crée une liste de dictionnaires 
             
@@ -208,26 +241,20 @@ def creer_lab_Aldous_frerot(n) :
          
             
          
-        if len(cases_visitees) == n**2 : # Quand on a visités toutes les cases c'est fini 
+        if len(cases_visitees) == n*m : # Quand on a visités toutes les cases c'est fini 
             maze_completed = True
     
     lab_final.reverse() # Sans le reverse, le premier termes était en bas à droite du labyrinthe
     
-    
-    
-    return transformation(index_lab_final)  # Sors un format lisible pour l'interpreteur graphique 
+    print(lab_final)
+    return transformation(index_lab_final,lab_final)  # Sors un format lisible pour l'interpreteur graphique 
         
        
         
        
 
-
-
-
-
-        
        
-print(creer_lab_Aldous_frerot(4))        
+print(creer_lab_Aldous_frerot(3,3))        
        
         
        
