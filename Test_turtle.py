@@ -1,27 +1,33 @@
 from math import *
-#from Maze_Generator import *
-
+from Creation_lab_aldous import *
 from turtle import *
 
-def turtle_truc(n,G):
-    setworldcoordinates(0, 0, n, n)
-    title("Maze Generator")
-    speed(10) 
+def turtle_truc(n,m,G):
+    """
+    Entrée : 2 entiers, la longeur et la largeur du labyrinthe avec n la longeur et m la largeur, ainsi qu'un dictionnaire de coordonnées
+    Sortie : un labyrinthe en turtle
+    Rôle   : Créer un labyrinthe
+    
+    """
+    setworldcoordinates(0, 0, n, m) # pour régler  l'affichage de la page turtle
+    title("Maze Generator") 
+    speed(6) 
     pensize(1)
 
     maze_completed = False
     
     etape = 0
-    key_list = list(G.keys())
-    val_list = list(G.values())
-    print(key_list)
-    print(val_list)
-    longueur = n
+    key_list = list(G.keys()) # la liste des clés du dictionnaire
+    val_list = list(G.values()) # la liste des valeurs du dictionnaire
+    largeur = n
+    longueur = m
 
     while maze_completed == False:
         while etape == 0 : # on  définit les contours du labyrinthe
             pd()
             forward(longueur)
+            left(90)
+            forward(largeur)
             left(90)
             
   
@@ -32,13 +38,13 @@ def turtle_truc(n,G):
                 
 
         while etape == 1 : # on créé les parois intérieurs du labyrinthe
-            for i in range(int(n)):
+            for i in range(int(m)):
                 setx(0)
                 sety(0)
                 setheading(0)
                 forward(i)
                 left(90)
-                forward(n)
+                forward(m)
             for j in range (int(n)) :
                 setx(0)
                 sety(0)
@@ -50,8 +56,8 @@ def turtle_truc(n,G):
                    
                
         while etape == 2 :
-            for i in range(len(G)):
-                for j in range(len(G)):
+            for i in range(len(G)): # la largeur
+                for j in range(len(G)): # la longeur
                     if key_list[i] in val_list[j]:
                         pencolor('white')
                        
@@ -80,7 +86,7 @@ def turtle_truc(n,G):
                         
                         elif key_list[i][1] == key_list[j][1] and key_list[i][0] != key_list[j][0]: # Pareil qu'au desssus mais cette fois si c'est pour les index 1
                         
-                            if key_list[i][1] == n-1 and n > 2 : # si on est trop à droite
+                            if key_list[i][1] == m-1 and m > 2 : # si on est trop à droite
                                                                  # on efface un trait vers la gauche au lieu de la droie
                                 pu()
                                 setpos(key_list[j][1]+1,max(key_list[i][0],key_list[j][0]))
@@ -114,6 +120,8 @@ def turtle_truc(n,G):
                 pd()
                 forward(longueur)
                 left(90)
+                forward(largeur)
+                left(90)
 
                 if abs(pos()) < 1 :
                     etape+=1
@@ -128,45 +136,23 @@ def turtle_truc(n,G):
             
 
 
-cote2 = {(0, 0): [(1, 0), (0, 1)],         (0, 1): [(0, 0), (1, 1)], (1, 0): [(1, 1), (0, 0)], (1, 1): [(1, 0), (0, 1)]}          
-
-cote4 ={(0, 0): [(0, 1)], (0, 1): [(0, 2), (1, 1)], (0, 2): [(0, 3)], (0, 3): [], (1, 0): [(2, 0)], (1, 1): [(1, 0), (0, 1)], (1, 2): [(1, 3), (2, 2), (1, 1)], (1, 3): [(1, 2), (0, 3)], (2, 0): [(2, 1)], (2, 1): [(2, 2), (3, 1)], (2, 2): [(2, 3), (2, 1), (1, 2)], (2, 3): [(2, 2)], (3, 0): [], (3, 1): [(3, 0), (2, 1)], (3, 2): [(3, 1)], (3, 3): [(2, 3)]}
-
-cote5 = {(0, 0): [(1, 0)], (0, 1): [(0, 2), (1, 1)], (0, 2): [(0, 1)], (0, 3): [(0, 4), (1, 3)], (0, 4): [(0, 3)], (1, 0): [(1, 1), (0, 0)], (1, 1): [(0, 1), (2, 1), (1, 0), (1, 2)], (1, 2): [(1, 1)], (1, 3): [(2, 3), (0, 3)], (1, 4): [(2, 
-4)], (2, 0): [(2, 1)], (2, 1): [(2, 0), (1, 1), (3, 1)], (2, 2): [(2, 3)], (2, 3): [(1, 3), (2, 2), (2, 4)], (2, 4): [(1, 4), (3, 4), (2, 3)], (3, 0): [(4, 0)], (3, 1): [(3, 2), (2, 1)], (3, 2): [(3, 1), (3, 3)], (3, 3): [(3, 4), (4, 3), (3, 2)], (3, 4): [(3, 3), (2, 4)], (4, 0): [(4, 1), (3, 0)], (4, 1): [(4, 0), (4, 2)], (4, 2): [(4, 3), (4, 1)], (4, 3): [(4, 4), (3, 3), (4, 2)], (4, 4): [(4, 3)]}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 cote4x4 ={(0, 0): [(1, 0)], (0, 1): [(1, 1), (0, 2)], (0, 2): [(0, 1)], (0, 3): [(1, 3)], (1, 0): [(0, 0), (1, 1)], (1, 1): [(1, 0), (0, 1), (1, 2)], (1, 2): [(1, 3), (2, 2), (1, 1)], (1, 3): [(1, 2), (2, 3), (0, 3)], (2, 0): [(3, 0), (2, 1)], (2, 1): [(3, 1), (2, 0)], (2, 2): [(3, 2), (1, 2)], (2, 3): [(1, 3), (3, 3)], (3, 0): [(2, 0), (3, 1)], (3, 1): [(3, 2), (2, 1), (3, 0)], (3, 2): [(3, 1), (2, 2), (3, 3)], (3, 3): [(3, 2), (2, 3)]}
-cote3 = {(0, 0): [], (0, 1): [], (0, 2): [], (1, 0): [], (1, 1): [(1,2)], (1, 2): [], (2, 0): [], (2, 1): [], (2, 2): []}
 
 cotetest = {(0, 0): [(0,1)], (0, 1): [(0,2)], (0, 2): [(0,3)],(0,3):[(1,3)], (1, 0): [(2,0)], (1, 1): [(1,2),(2,1)], (1, 2): [(2,2)],(1,3):[(2,3)], (2, 0): [(2,1),(3,0)], (2, 1): [(3,1)], (2, 2): [(2,3)],(2,3):[(3,3)], (3,0):[],(3,1):[(3,2)],(3,2):[],(3,3): [] }
 
-cote3x3={(0, 0): [(1, 0), (0, 1)], (0, 1): [(1, 1)], (0, 2): [], (1, 0): [(1, 1)], (1, 1): [(2, 1), (1, 2)], (1, 2): [(0, 2)], (2, 0): [], (2, 1): [(2, 0), (1, 1)], (2, 2): [(1, 2)]}
+cote3x3={(0, 0): [(1, 0), (0, 1)], (0, 1): [(1, 1)], (0, 2): [], (1, 0): [(2, 0), (1, 1)], (1, 1): [(0, 1)], (1, 2): [(1, 1)], (2, 0): [], (2, 1): [(1, 1)], (2, 2): [(2, 1)]}
+
+
+cote45 ={(0, 0): [(1, 0)], (0, 1): [(1, 1)], (0, 2): [(0, 3), (1, 2)], (0, 3): [(1, 3)], (0, 4): [], (1, 0): [(2, 0)], (1, 1): [(1, 2), (0, 1)], (1, 2): [(1, 3), (1, 1)], (1, 3): [(1, 4)], (1, 4): [(1, 3)], (2, 0): [(2, 1), (3, 0)], (2, 1): [(2, 2), (2, 0), (1, 1)], (2, 2): [(2, 3), (2, 1)], (2, 3): [(2, 4), (2, 2)], (2, 4): [(2, 3)], (3, 0): [], (3, 1): [(3, 0)], (3, 2): [(3, 1), (2, 2)], (3, 3): [(3, 2), (2, 3)], (3, 4): [(2, 4)]}
 
 
 
+a = int(input('Entrez la longeur du labyrinthe : '))
+b = int(input('Entrez la largeur du labyrinthe : '))
 
+graphe = creer_lab_Aldous_frerot(a,b)
 
-
-E = {(0, 0): [(0, 1)], (0, 1): [(0, 2), (0, 0), (1, 1)], (0, 2): [(1, 2), (0, 1), (0, 1)], (1, 0): [(2, 0), (2, 0)], (1, 1): [(0, 1), (1, 2), (1, 2)], (1, 2): [(0, 2), (2, 2), (1, 1), (0, 2)], (2, 0): [(2, 1), (2, 1), (1, 0)], (2, 1): [(2, 0), (2, 2)], (2, 2): [(2, 1), (1, 2), (1, 2)]}
-print(turtle_truc(sqrt(len(cote3x3)),cote3x3))
+print(turtle_truc(a,b,graphe))
 
 
 
