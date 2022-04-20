@@ -30,9 +30,6 @@ def turtle_lab(n,m,G):
             forward(largeur)
             left(90)
             
-  
-        
-        
             if abs(pos()) < 1 :
                 etape +=1
                 
