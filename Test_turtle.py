@@ -54,7 +54,6 @@ def turtle_lab(n,m,G):
                
         while etape == 2 :
             for i in range(len(G)): 
-                print(i)
                 for j in range(len(G)):
                     if key_list[i] in val_list[j]:
                         pencolor('white') # on efface pas le trait, mais on le repasse en blanc
@@ -132,21 +131,72 @@ def turtle_lab(n,m,G):
 
 
         done()
-            
+
+az =[{'N': False, 'E': True, 'S': False, 'O': False}, {'N': False, 'E': True, 'S': False, 'O': True}, {'N': False, 'E': True, 'S': False, 'O': True},  {'N': False, 'E': False, 'S': True, 'O': True},  {'N': False, 'E': False, 'S': True, 'O': False}, 
+ {'N': False, 'E': True, 'S': False, 'O': False}, {'N': False, 'E': True, 'S': True, 'O': True},  {'N': True, 'E': False, 'S': False, 'O': True},  {'N': True, 'E': True, 'S': True, 'O': False},   {'N': False, 'E': False, 'S': True, 'O': True},
+ {'N': True, 'E': True, 'S': False, 'O': False},  {'N': False, 'E': False, 'S': True, 'O': True}, {'N': True, 'E': False, 'S': True, 'O': False},  {'N': True, 'E': True, 'S': False, 'O': False},  {'N': False, 'E': True, 'S': True, 'O': True}, 
+ {'N': True, 'E': False, 'S': True, 'O': True},   {'N': True, 'E': True, 'S': False, 'O': False}, {'N': False, 'E': False, 'S': False, 'O': True}, {'N': True, 'E': False, 'S': False, 'O': False}, {'N': True, 'E': False, 'S': False, 'O': False}]
+
+def transfo(G,longe,large):
+    g = {}
+    l = len(G)
+    for i in range(max(large,longe)): # Création des cellules
+        for j in range(min(large,longe)):
+            g.update({(i,j):[]})
+    
+    for i in range(l):
+        if G[i]['N'] == True :
+            ajouter_arete(g,list(g)[i],((list(g)[i][0]+1,list(g)[i][1])))
+        
+        if G[i]['S'] == True :
+            ajouter_arete(g,list(g)[i],((list(g)[i][0]-1,list(g)[i][1])))
+
+        if G[i]['O'] == True :
+            ajouter_arete(g,list(g)[i],((list(g)[i][0],list(g)[i][1]-1)))
+
+        if G[i]['E'] == True :
+            ajouter_arete(g,list(g)[i],((list(g)[i][0],list(g)[i][1]+1)))
+
+    return g
+    
+
+def ajouter_arete(G,x, y):     # ajoute une arrête entre 2 noeuds
+        if x != y:                    # pour pas qu'on puisse faire une arrete avec le meme noeud
+            if y not in G[x]:
+                G[x].append(y)
+           
+                """if x not in G[y]:    # pour les graphes non orientés 
+                    G[y].append(x)"""
+
+
 
 cote54 = {(0,0):[(1,0)],(0,1):[(0,2)],(0,2):[(0,1),(0,3)],(0,3):[(0,2),(1,3),(0,4)],(0,4):[(0,3),(1,4)],
           (1,0):[(0,0),(1,1)],(1,1):[(1,0),(1,2)],(1,2):[(1,1),(2,2),(1,3)],(1,3):[(1,2),(0,3)],(1,4):[(0,4),(2,4)],
           (2,0):[(3,0),(2,1)],(2,1):[(2,0),(2,2)],(2,2):[(2,1),(1,2),(3,2)],(2,3):[(2,4)],(2,4):[(1,4),(3,4)],
           (3,0):[(2,0),(3,1)],(3,1):[(3,0)],(3,2):[(2,2),(3,3)],(3,3):[(3,2)],(3,4):[(2,4)]}
 
+cote54bis ={(0, 0): [(0, 1)], (0, 1): [(0, 0), (0, 2)], (0, 2): [(0, 1), (0, 3)], (0, 3): [(1, 3), (0, 2)], (1, 0): [(2, 0)], (1, 1): [(1, 2)], (1, 2): [(2, 2), (1, 1), (1, 3)], (1, 3): [(0, 3), (1, 2)], (2, 0): [(1, 0), (3, 0), (2, 1)], (2, 1): [(3, 1), (2, 0)], (2, 2): [(1, 2), (2, 3)], (2, 3): [(3, 3), (2, 2)], (3, 0): [(2, 0), (4, 0)], (3, 1): [(2, 1), 
+(3, 2)], (3, 2): [(4, 2), (3, 1), (3, 3)], (3, 3): [(2, 3), (4, 3), (3, 2)], (4, 0): [(3, 0), (4, 1)], (4, 1): [(4, 
+0)], (4, 2): [(3, 2)], (4, 3): [(3, 3)]}
+
+
+
 cote3x3 = {(0, 0) :[(0, 1), (1, 0)]  , (0, 1)  :[ (0, 0), (0, 2) ] , (0, 2)  :[ (0,1), (1,2) ] , (1, 0)  :[ (0,0), (1,1), (2,0)] , (1, 1)  :[ (1,0) ]  , (1, 2)  :[ (0,2), (2,2)] , (2, 0)  : [(1,0), (2,1)] , (2, 1)  :[ (2,0)] , (2, 2)  :[ (1,1)] }
 
-"""long = int(input('Entrez la longeur du labyrinthe : '))
+long = int(input('Entrez la longeur du labyrinthe : '))
 larg = int(input('Entrez la largeur du labyrinthe : '))
 
-graphe = creer_lab_Aldous_frerot(long,larg)"""
+graphe =creer_lab_Aldous_frerot(long,larg)
+graphe2 = transfo(graphe,long,larg)
 
-print(turtle_lab(3,3,cote3x3))
+print(graphe)
+print()
+print(graphe2)
+
+print(turtle_lab(larg,long,graphe2))
+
+#print(transfo(az,4,5)) # 5 = largeur et 4 = longeur
+
 
 
 
