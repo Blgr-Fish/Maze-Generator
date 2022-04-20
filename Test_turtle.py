@@ -12,7 +12,7 @@ def turtle_lab(n,m,G):
     """
     setworldcoordinates(-0.5, -0.5, m+0.5, n+0.5) # pour régler  l'affichage de la page turtle
     title("Maze Generator") 
-    speed(10) 
+    speed(15) # Modifier pour que ça aille plus ou moins vite 
     pensize(1)
 
     maze_completed = False
@@ -108,11 +108,11 @@ def turtle_lab(n,m,G):
 
                         
             pu()
-            setpos(0,0) # quand tout est fini, on revient point de départ
+            setpos(0,0) # quand tout est fini, on revient au point de départ
             setheading(0)
             etape += 1
 
-            while etape == 3 : # on remet bien les murs
+            while etape == 3 : # on refait bien les contours
                 
                 pencolor("black")
                 pd()
@@ -133,29 +133,60 @@ def turtle_lab(n,m,G):
 
         done()
 
-az =[{'N': False, 'E': True, 'S': False, 'O': False}, {'N': False, 'E': True, 'S': False, 'O': True}, {'N': False, 'E': True, 'S': False, 'O': True},  {'N': False, 'E': False, 'S': True, 'O': True},  {'N': False, 'E': False, 'S': True, 'O': False}, 
- {'N': False, 'E': True, 'S': False, 'O': False}, {'N': False, 'E': True, 'S': True, 'O': True},  {'N': True, 'E': False, 'S': False, 'O': True},  {'N': True, 'E': True, 'S': True, 'O': False},   {'N': False, 'E': False, 'S': True, 'O': True},
- {'N': True, 'E': True, 'S': False, 'O': False},  {'N': False, 'E': False, 'S': True, 'O': True}, {'N': True, 'E': False, 'S': True, 'O': False},  {'N': True, 'E': True, 'S': False, 'O': False},  {'N': False, 'E': True, 'S': True, 'O': True}, 
- {'N': True, 'E': False, 'S': True, 'O': True},   {'N': True, 'E': True, 'S': False, 'O': False}, {'N': False, 'E': False, 'S': False, 'O': True}, {'N': True, 'E': False, 'S': False, 'O': False}, {'N': True, 'E': False, 'S': False, 'O': False}]
 
-def transfo(G,longe,large):
+
+def transfo_aldous(G,longe,large):
+    """
+    Entrée : Une liste de directions NSOE, une valeur longueur et une valeur largeur
+    Sortie : Un dictionnaire sous forme {(cellule):[(cellule_reliée)]}
+    Rôle   : Transformer une liste de directions venant de l'algorithme d'Aldous en un dictionnaire interprétable par la partie graphique   
+    """
+    g = {} 
+    l = len(G)
+    for i in range(max(large,longe)): # Création des cellules
+        for j in range(min(large,longe)):
+            g.update({(i,j):[]})
+    
+    for i in range(l):        # Si N est égal à True, cela signifie que la cellule est reliée en haut
+        if G[i]['N'] == True :
+            ajouter_arete(g,list(g)[i],((list(g)[i][0]+1,list(g)[i][1])))
+        
+        if G[i]['S'] == True :  # Si S est égal à True, cela signifie que la cellule est reliée en bas
+            ajouter_arete(g,list(g)[i],((list(g)[i][0]-1,list(g)[i][1])))
+
+        if G[i]['O'] == True :   # Si O est égal à True, cela signifie que la cellule est reliée à gauche
+            ajouter_arete(g,list(g)[i],((list(g)[i][0],list(g)[i][1]-1)))
+
+        if G[i]['E'] == True :   # Si E est égal à True, cela signifie que la cellule est reliée à droite
+            ajouter_arete(g,list(g)[i],((list(g)[i][0],list(g)[i][1]+1)))
+
+    return g
+
+
+
+def transfo_prim(G,longe,large):
+    """
+    Entrée : Une liste de directions NSOE, une valeur longueur et une valeur largeur
+    Sortie : Un dictionnaire sous forme {(cellule):[(cellule_reliée)]}
+    Rôle   : Transformer une liste de directions venant de l'algorithme d'Aldous en un dictionnaire interprétable par la partie graphique   
+    """
     g = {}
     l = len(G)
     for i in range(max(large,longe)): # Création des cellules
         for j in range(min(large,longe)):
             g.update({(i,j):[]})
     
-    for i in range(l):
-        if G[i]['N'] == True :
-            ajouter_arete(g,list(g)[i],((list(g)[i][0]+1,list(g)[i][1])))
-        
-        if G[i]['S'] == True :
+    for i in range(l): 
+        if G[i]['N'] == True :   # Si N est égal à True, cela signifie que la cellule est reliée en bas, car le point (0,0) se situe en haut à droite, du coup il faut inverser le labyrintge
             ajouter_arete(g,list(g)[i],((list(g)[i][0]-1,list(g)[i][1])))
+        
+        if G[i]['S'] == True :  # Si S est égal à True, cela signifie que la cellule est reliée en haut
+            ajouter_arete(g,list(g)[i],((list(g)[i][0]+1,list(g)[i][1])))
 
-        if G[i]['O'] == True :
+        if G[i]['O'] == True : # Si O est égal à True, cela signifie que la cellule est reliée à gauche
             ajouter_arete(g,list(g)[i],((list(g)[i][0],list(g)[i][1]-1)))
 
-        if G[i]['E'] == True :
+        if G[i]['E'] == True : # Si E est égal à True, cela signifie que la cellule est reliée à droite
             ajouter_arete(g,list(g)[i],((list(g)[i][0],list(g)[i][1]+1)))
 
     return g
@@ -166,35 +197,29 @@ def ajouter_arete(G,x, y):     # ajoute une arrête entre 2 noeuds
             if y not in G[x]:
                 G[x].append(y)
            
-                """if x not in G[y]:    # pour les graphes non orientés 
-                    G[y].append(x)"""
+#######################################################################################################
+
+def mainprog():
+
+    long = int(input('Entrez la longeur du labyrinthe (METTRE LA PLUS GRANDE VALEUR): '))
+    assert long > 1, "Un labyrinthe ne peut pas être créé avec une longueur de 1"
+
+    larg = int(input('Entrez la largeur du labyrinthe (METTRE LA PLUS PETITE VALEUR): '))
+    assert larg > 1,  "Un labyrinthe ne peut pas être créé avec une largeur de 1"
+
+    question = input("Prim ou Aldous ? ")
+
+    if question.upper() == "ALDOUS" :
+        graphe =creer_lab_Aldous_frerot(long,larg)
+        graphe2 = transfo_aldous(graphe,larg,long)
+        print(turtle_lab(long,larg,graphe2))
+    elif question.upper() == "PRIM" :
+        graphe = creer_lab_prim(long,larg)
+        graphe2 = transfo_prim(graphe,larg,long)
+        print(turtle_lab(long,larg,graphe2))
+    else : 
+        print('Erreur, relancez le programme.(Vérifiez la syntaxe des algorithmes)')
 
 
-
-cote54 = {(0,0):[(1,0)],(0,1):[(0,2)],(0,2):[(0,1),(0,3)],(0,3):[(0,2),(1,3),(0,4)],(0,4):[(0,3),(1,4)],
-          (1,0):[(0,0),(1,1)],(1,1):[(1,0),(1,2)],(1,2):[(1,1),(2,2),(1,3)],(1,3):[(1,2),(0,3)],(1,4):[(0,4),(2,4)],
-          (2,0):[(3,0),(2,1)],(2,1):[(2,0),(2,2)],(2,2):[(2,1),(1,2),(3,2)],(2,3):[(2,4)],(2,4):[(1,4),(3,4)],
-          (3,0):[(2,0),(3,1)],(3,1):[(3,0)],(3,2):[(2,2),(3,3)],(3,3):[(3,2)],(3,4):[(2,4)]}
-
-cote54bis ={(0, 0): [(0, 1)], (0, 1): [(0, 0), (0, 2)], (0, 2): [(0, 1), (0, 3)], (0, 3): [(1, 3), (0, 2)], (1, 0): [(2, 0)], (1, 1): [(1, 2)], (1, 2): [(2, 2), (1, 1), (1, 3)], (1, 3): [(0, 3), (1, 2)], (2, 0): [(1, 0), (3, 0), (2, 1)], (2, 1): [(3, 1), (2, 0)], (2, 2): [(1, 2), (2, 3)], (2, 3): [(3, 3), (2, 2)], (3, 0): [(2, 0), (4, 0)], (3, 1): [(2, 1), 
-(3, 2)], (3, 2): [(4, 2), (3, 1), (3, 3)], (3, 3): [(2, 3), (4, 3), (3, 2)], (4, 0): [(3, 0), (4, 1)], (4, 1): [(4, 
-0)], (4, 2): [(3, 2)], (4, 3): [(3, 3)]}
-
-
-
-cote3x3 = {(0, 0) :[(0, 1), (1, 0)]  , (0, 1)  :[ (0, 0), (0, 2) ] , (0, 2)  :[ (0,1), (1,2) ] , (1, 0)  :[ (0,0), (1,1), (2,0)] , (1, 1)  :[ (1,0) ]  , (1, 2)  :[ (0,2), (2,2)] , (2, 0)  : [(1,0), (2,1)] , (2, 1)  :[ (2,0)] , (2, 2)  :[ (1,1)] }
-
-long = int(input('Entrez la longeur du labyrinthe (METTRE LA PLUS GRANDE VALEUR): '))
-larg = int(input('Entrez la largeur du labyrinthe (METTRE LA PLUS PETITE VALEUR): '))
-
-graphe =creer_lab_Aldous_frerot(long,larg)
-graphe2 = transfo(graphe,larg,long)
-
-
-print(turtle_lab(long,larg,graphe2))
-
-#print(transfo(az,4,5)) # 5 = largeur et 4 = longeur
-
-
-
+mainprog()
 
