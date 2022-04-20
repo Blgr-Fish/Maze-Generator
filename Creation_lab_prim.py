@@ -318,7 +318,7 @@ def creer_lab_prim(n,m) :  # n est la longueur ( <---> ) et m la largeur
     #return affiche_lab(lab_final , n, m) #--> pour affichage semi-graphique
         
       
-#print(creer_lab_prim(3,2))        
+#print(creer_lab_prim(3,3))        
        
         
        
