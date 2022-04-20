@@ -207,6 +207,7 @@ def mainprog():
     larg = int(input('Entrez la largeur du labyrinthe (METTRE LA PLUS PETITE VALEUR): '))
     assert larg > 1,  "Un labyrinthe ne peut pas être créé avec une largeur de 1"
 
+    assert long < larg, "La longueur doit être supérieure ou égale à la largeur"
     question = input("Prim ou Aldous ? ")
 
     if question.upper() == "ALDOUS" :
