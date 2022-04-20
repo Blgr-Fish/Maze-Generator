@@ -313,10 +313,12 @@ def creer_lab_prim(n,m) :  # n est la longueur ( <---> ) et m la largeur
             maze_completed = True
                         
     lab_final.reverse() # Sans le reverse, le premier termes était en bas à droite du labyrinthe
-    return affiche_lab(lab_final , n, m)
+    
+    return lab_final
+    #return affiche_lab(lab_final , n, m) #--> pour affichage semi-graphique
         
       
-print(creer_lab_prim(5,5))        
+#print(creer_lab_prim(3,2))        
        
         
        
