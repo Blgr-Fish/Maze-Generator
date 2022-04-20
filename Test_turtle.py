@@ -1,5 +1,6 @@
 from math import *
 from Creation_lab_aldous import *
+from Creation_lab_prim import *
 from turtle import *
 
 def turtle_lab(n,m,G):
