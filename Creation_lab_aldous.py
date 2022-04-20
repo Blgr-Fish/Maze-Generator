@@ -117,10 +117,10 @@ def get_voisins_case_directions(case, direction) :
         temp = (case[0]+1, case[1])
         
     if direction == 'N' :
-        temp = (case[0] , case[1]+1)
+        temp = (case[0] , case[1]-1)
         
     if direction == 'S' :
-        temp = (case[0] , case[1]-1)
+        temp = (case[0] , case[1]+1)
         
         
     return temp
@@ -160,9 +160,9 @@ def direction_fusions_2_cases(case1, case2) :  #Case1 --> case actuel et Case2 -
         direction = 'O'
     if case1[0] == case2[0] and case1[1] == case2[1]+1 :
         direction = 'E'
-    if case1[0] == case2[0]+1 and case1[1] == case2[1] :
-        direction = 'N'
     if case1[0] == case2[0]-1 and case1[1] == case2[1] :
+        direction = 'N'
+    if case1[0] == case2[0]+1 and case1[1] == case2[1] :
         direction = 'S'
         
     return direction
@@ -192,9 +192,53 @@ def transformation(test_index , test_card) :
     return produit_final
 
 
-
+def affiche_lab(lab_card,n,m) : # On rentre la liste de citionnaire
+    """
+    Entrée : Une liste de dictionnaires avec les directions et les booléens (direction_labyrinthe) et les dimensions du labyrinthe
+    Sortie : Une chaine de caractères qui représente le labyrinthe
+    Rôle : Donne une forme visuellement interpretable du labyrinthe
+    """
+     
+    coins = [" ", "═", "║", "╚", "═", "═", "╝", "╩", "║", "╔", "║", "╠", "╗", "╦", "╣", "╬"]  #On a associé des valeurs binaires pour les directions 
+                                                                                              #  Est = 1 ; Nord = 2 ; Ouest = 4 ; Sud = 8
+                                                                                              
+  
+    visual_lab = "\n"
     
-def creer_lab_Aldous_frerot(n,m) :  # n est la longueur et m la largeur 
+    saut_ligne = "\n"
+    
+    valeur_index = 0
+    
+    compteur_pour_saut_de_ligne = 0
+    
+    for i in range(m*n) :  # Les dimension du labyrinthe 
+        if lab_card[i]['E'] == True :
+            valeur_index += 1
+                
+        if lab_card[i]['N'] == True :
+            valeur_index += 2
+                
+        if lab_card[i]['O'] == True :
+            valeur_index += 4 
+    
+        if lab_card[i]['S'] == True :
+            valeur_index += 8
+            
+        visual_lab = visual_lab + coins[valeur_index]
+
+        valeur_index = 0 # On réinitialise la valeur à 0
+        compteur_pour_saut_de_ligne +=1
+        
+        if compteur_pour_saut_de_ligne == m : 
+            
+            visual_lab = visual_lab + saut_ligne    # On saute de ligne
+            compteur_pour_saut_de_ligne = 0
+
+    return visual_lab
+    
+#                                                                                   ^
+#                                                                                   |                    
+def creer_lab_Aldous_frerot(n,m) :  # n est la longueur ( <---> ) et m la largeur   | 
     """
     Entrée : Un entier qui donne les dimensions du labyrinthe 
     Sortie : Une liste de dictionnaires avec les directions et les booléens (le tout forme un labyrinthe) 
@@ -246,23 +290,18 @@ def creer_lab_Aldous_frerot(n,m) :  # n est la longueur et m la largeur
     
     lab_final.reverse() # Sans le reverse, le premier termes était en bas à droite du labyrinthe
     
-    #print(lab_final)
-    return transformation(index_lab_final,lab_final)  # Sors un format lisible pour l'interpreteur graphique 
-        
+    
+    return affiche_lab(lab_final, n, m)  # Sors un format lisible pour l'interpreteur graphique 
+
        
         
        
 
        
-print(creer_lab_Aldous_frerot(4,5))        
+print(creer_lab_Aldous_frerot(10,10))        
        
         
        
-        
-       
-        
-       
- 
         
        
         
