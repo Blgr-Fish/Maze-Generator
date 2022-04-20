@@ -245,7 +245,7 @@ def creer_lab_prim(n,m) :  # n est la longueur ( <---> ) et m la largeur
 
 
     for i in range(n) :                 # Axe des abscisses <---> 
-        for j in range(n) :             # Axe des ordonnées (vers le haut)
+        for j in range(m) :             # Axe des ordonnées (vers le haut)
             index_lab_final.append((i,j))
             lab_final.append(creer_case())
 
@@ -311,14 +311,14 @@ def creer_lab_prim(n,m) :  # n est la longueur ( <---> ) et m la largeur
 
         if len(cases_fusionnees) == n*m :  # Quand toutes les cases du labyrinthe ont été fusionnées 
             maze_completed = True
-                        
+    print(lab_final)
+    print(len(lab_final))
     lab_final.reverse() # Sans le reverse, le premier termes était en bas à droite du labyrinthe
-    
+    #return affiche_lab(lab_final , n, m)
     return lab_final
-    #return affiche_lab(lab_final , n, m) #--> pour affichage semi-graphique
         
       
-#print(creer_lab_prim(3,3))        
+       
        
         
        
