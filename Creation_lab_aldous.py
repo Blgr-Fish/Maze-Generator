@@ -246,7 +246,7 @@ def creer_lab_Aldous_frerot(n,m) :  # n est la longueur et m la largeur
     
     lab_final.reverse() # Sans le reverse, le premier termes était en bas à droite du labyrinthe
     
-    print(lab_final)
+    #print(lab_final)
     return transformation(index_lab_final,lab_final)  # Sors un format lisible pour l'interpreteur graphique 
         
        
@@ -254,7 +254,7 @@ def creer_lab_Aldous_frerot(n,m) :  # n est la longueur et m la largeur
        
 
        
-print(creer_lab_Aldous_frerot(3,3))        
+print(creer_lab_Aldous_frerot(4,5))        
        
         
        
