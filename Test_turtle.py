@@ -183,17 +183,14 @@ cote54bis ={(0, 0): [(0, 1)], (0, 1): [(0, 0), (0, 2)], (0, 2): [(0, 1), (0, 3)]
 
 cote3x3 = {(0, 0) :[(0, 1), (1, 0)]  , (0, 1)  :[ (0, 0), (0, 2) ] , (0, 2)  :[ (0,1), (1,2) ] , (1, 0)  :[ (0,0), (1,1), (2,0)] , (1, 1)  :[ (1,0) ]  , (1, 2)  :[ (0,2), (2,2)] , (2, 0)  : [(1,0), (2,1)] , (2, 1)  :[ (2,0)] , (2, 2)  :[ (1,1)] }
 
-long = int(input('Entrez la longeur du labyrinthe : '))
-larg = int(input('Entrez la largeur du labyrinthe : '))
+long = int(input('Entrez la longeur du labyrinthe (METTRE LA PLUS GRANDE VALEUR): '))
+larg = int(input('Entrez la largeur du labyrinthe (METTRE LA PLUS PETITE VALEUR): '))
 
 graphe =creer_lab_Aldous_frerot(long,larg)
-graphe2 = transfo(graphe,long,larg)
+graphe2 = transfo(graphe,larg,long)
 
-print(graphe)
-print()
-print(graphe2)
 
-print(turtle_lab(larg,long,graphe2))
+print(turtle_lab(long,larg,graphe2))
 
 #print(transfo(az,4,5)) # 5 = largeur et 4 = longeur
 
